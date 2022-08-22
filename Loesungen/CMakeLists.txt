@@ -9,4 +9,5 @@ PROJECT(CPP_Challenge)
 #set(SOURCE_FILES main.cpp)
 #add_subdirectory(../CPP_Challenge/include)
 
-add_executable(test test.cpp)
+#add_executable(test test.cpp)
+add_executable(loesung_01 loesung_01.cpp)

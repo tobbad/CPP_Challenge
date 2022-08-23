@@ -4,6 +4,9 @@
     <ClCompile Include="C:\Users\tobias.badertscher\source\repos\C_C++\CPP_Challenge\Loesungen\loesung_01.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="C:\Users\tobias.badertscher\source\repos\C_C++\CPP_Challenge\Loesungen\getopt.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="C:\Users\tobias.badertscher\source\repos\C_C++\CPP_Challenge\Loesungen\CMakeLists.txt" />

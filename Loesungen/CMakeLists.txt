@@ -2,7 +2,8 @@ cmake_minimum_required(VERSION 3.10)
 project(CPP_Challenge VERSION 0.1)
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
-add_executable(loesung_01 loesung_01.cpp)
+include_directories(${PROJECT_SOURCE_DIR})
+add_executable(loesung_01 loesung_01.cpp getopt.c)
 target_include_directories(loesung_01 PUBLIC ${POJRCT_BINARY_DIR})
 #target_include_directories(CPP_Challenge PUBLIC
 #                          "${PROJECT_BINARY_DIR}"
@@ -10,12 +11,9 @@ target_include_directories(loesung_01 PUBLIC ${POJRCT_BINARY_DIR})
 #                          )
 configure_file(version.in.h version.h)
 
-<<<<<<< HEAD
-add_subdirectory(lib)
-list(APPEND EXTRA_LIB lib)
-list(APPEND EXTRA_INCLUDE lib)
+#add_subdirectory(lib)
+#add_library(lib getopt.c)
+#list(APPEND EXTRA_LIB lib)
+#list(APPEND EXTRA_INCLUDE lib)
 
-target_link_libraries(loesung_01 STATIC  lib)
-=======
-add_executable(test test.cpp)
->>>>>>> parent of 7301bdc (Changes to CMakeList.txt.)
+#target_link_libraries(loesung_01 STATIC  lib)

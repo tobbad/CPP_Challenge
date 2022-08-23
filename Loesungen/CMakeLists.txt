@@ -10,8 +10,12 @@ target_include_directories(loesung_01 PUBLIC ${POJRCT_BINARY_DIR})
 #                          )
 configure_file(version.in.h version.h)
 
+<<<<<<< HEAD
 add_subdirectory(lib)
 list(APPEND EXTRA_LIB lib)
 list(APPEND EXTRA_INCLUDE lib)
 
 target_link_libraries(loesung_01 STATIC  lib)
+=======
+add_executable(test test.cpp)
+>>>>>>> parent of 7301bdc (Changes to CMakeList.txt.)

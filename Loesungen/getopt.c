@@ -16,22 +16,43 @@
 * limitations under the License.
 *
 ******************************************************************/
-// Obtained from https://github.com/iotivity/iotivity/blob/master/resource/c_common/windows/include/getopt.h
-#ifndef GETOPT_H__
-#define GETOPT_H__
-
+// Obtained from https://github.com/iotivity/iotivity/blob/master/resource/c_common/windows/src/getopt.c
 #ifdef __cplusplus
-extern "C" {
+#extern "C"
+{
 #endif
+#include "getopt.h"
+#include <windows.h>
 
-extern char *optarg;
-extern int optind;
+char* optarg = NULL;
+int optind = 1;
 
-int getopt(int argc, char *const argv[], const char *optstring);
+int getopt(int argc, char *const argv[], const char *optstring)
+{
+    if ((optind >= argc) || (argv[optind][0] != '-') || (argv[optind][0] == 0))
+    {
+        return -1;
+    }
 
-#ifdef __cplusplus
+    int opt = argv[optind][1];
+    const char *p = strchr(optstring, opt);
+
+    if (p == NULL)
+    {
+        return '?';
+    }
+    if (p[1] == ':')
+    {
+        optind++;
+        if (optind >= argc)
+        {
+            return '?';
+        }
+        optarg = argv[optind];
+        optind++;
+    }
+    return opt;
 }
+#ifdef __cplusplus
+} // extern "C"
 #endif
-
-#endif
-

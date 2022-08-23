@@ -1,3 +1,4 @@
 C:/Users/tobias.badertscher/source/repos/C_C++/CPP_Challenge/build/CMakeFiles/loesung_01.dir
 C:/Users/tobias.badertscher/source/repos/C_C++/CPP_Challenge/build/CMakeFiles/ALL_BUILD.dir
 C:/Users/tobias.badertscher/source/repos/C_C++/CPP_Challenge/build/CMakeFiles/ZERO_CHECK.dir
+C:/Users/tobias.badertscher/source/repos/C_C++/CPP_Challenge/build/lib/CMakeFiles/lib.dir

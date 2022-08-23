@@ -77,7 +77,7 @@ CMAKE_EXE_LINKER_FLAGS_RELWITHDEBINFO:STRING=/debug /INCREMENTAL
 CMAKE_FIND_PACKAGE_REDIRECTS_DIR:STATIC=C:/Users/tobias.badertscher/source/repos/C_C++/CPP_Challenge/build/CMakeFiles/pkgRedirects
 
 //Install path prefix, prepended onto install directories.
-CMAKE_INSTALL_PREFIX:PATH=C:/Program Files/CMake
+CMAKE_INSTALL_PREFIX:PATH=C:/Program Files (x86)/CPP_Challenge
 
 //Path to a program.
 CMAKE_LINKER:FILEPATH=C:/Program Files/Microsoft Visual Studio/2022/Professional/VC/Tools/MSVC/14.32.31326/bin/Hostx64/x64/link.exe
@@ -209,6 +209,9 @@ CPP_Challenge_IS_TOP_LEVEL:STATIC=ON
 //Value Computed by CMake
 CPP_Challenge_SOURCE_DIR:STATIC=C:/Users/tobias.badertscher/source/repos/C_C++/CPP_Challenge/Loesungen
 
+//Use library
+lib:BOOL=ON
+
 
 ########################
 # INTERNAL cache entries
@@ -294,7 +297,7 @@ CMAKE_MODULE_LINKER_FLAGS_RELWITHDEBINFO-ADVANCED:INTERNAL=1
 //ADVANCED property for variable: CMAKE_MT
 CMAKE_MT-ADVANCED:INTERNAL=1
 //number of local generators
-CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=1
+CMAKE_NUMBER_OF_MAKEFILES:INTERNAL=2
 //Platform information initialized
 CMAKE_PLATFORM_INFO_INITIALIZED:INTERNAL=1
 //noop for ranlib

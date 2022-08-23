@@ -1,2 +1,2 @@
 ﻿  loesung_01.cpp
-  loesung_01.vcxproj -> C:\Users\tobias.badertscher\source\repos\C_C++\CPP_Challenge\build\Debug\loesung_01.exe
+C:\Users\tobias.badertscher\source\repos\C_C++\CPP_Challenge\Loesungen\getopt.h(19,10): fatal error C1083: Datei (Include) kann nicht geöffnet werden: "features.h": No such file or directory

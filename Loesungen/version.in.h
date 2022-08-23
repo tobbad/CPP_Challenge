@@ -1,3 +1,3 @@
 // the configured options and settings for Tutorial
-#define Tutorial_VERSION_MAJOR @Tutorial_VERSION_MAJOR@
-#define Tutorial_VERSION_MINOR @Tutorial_VERSION_MINOR@
+#define CPP_CHALLENGE_VERSION_MAJOR @CPP_CHALLENGE_VERSION_MAJOR@
+#define CPP_CHALLENGE_VERSION_MINOR @CPP_CHALLENGE_VERSION_MINOR@

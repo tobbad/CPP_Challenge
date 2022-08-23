@@ -1,19 +1,42 @@
 // basic file operations
 #include <iostream>
-#include <string>
-//#include "version.h"
+#include "getopt.h"
+#include <unistd.h>
+#include "version.h"
 using namespace std;
 
 int main (int argc, char *argv[]) {
-  int summe=0;	
-  int limite=10+1;
-  char *limitc=argv[0];
-  limite=stoi(argv[0]);
-  if (argc != 1)
-  {
-	  cout << "ERROR: Expected exactly 1 argument";
-  }
-  std::cout << "Summe aller durch 3 und 5 teilbahren Zahlen bis zu einer Anwender vorgegeben Limite\n";
+	int c;
+	int aflag, bflag, cvalue;
+	while ((c = getopt (argc, argv, "abc:")) != -1)
+    switch (c) {
+      case 'a':
+        aflag = 1;
+        break;
+      case 'b':
+        bflag = 1;
+        break;
+      case 'c':
+        cvalue = optarg;
+        break;
+      case '?':
+        if (optopt == 'c')
+          fprintf (stderr, "Option -%c requires an argument.\n", optopt);
+        else if (isprint (optopt))
+          fprintf (stderr, "Unknown option `-%c'.\n", optopt);
+        else
+          fprintf (stderr,
+                   "Unknown option character `\\x%x'.\n",
+                   optopt);
+        return 1;
+      default:
+        abort ();
+	}
+	for(int i=obtind; i<argc; i++){     
+		std::stdout << argv[i] << std::endl;
+	}
+
+ std::cout << "Summe aller durch 3 und 5 teilbahren Zahlen bis zu einer Anwender vorgegeben Limite\n";
   std::cout << "Limite " ;
   std::cin >> limite;
   std::cout << "Summiere bis " << limite << endl;

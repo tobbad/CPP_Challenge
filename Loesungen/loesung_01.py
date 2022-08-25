@@ -2,7 +2,6 @@
 def loesung():
     print("Yes I am done")
     limit=input("Upper limit? ")
-    print(limit)
     limit=int(limit)
     summe=0
     for i in range(limit+1):

@@ -1,9 +1,10 @@
-// Solves the grösstrer geinsamer Teiler (kgt)
+// Bestimmt das kleinste gemeinsame Vielfachte (kgv)
 // basic file operations
 #include <iostream>
 #include "library.h"
 //#include "version.h"
 using namespace std;
+
 
 int main (int argc, char *argv[]) {
 	long long int summe=0;
@@ -16,7 +17,6 @@ int main (int argc, char *argv[]) {
    std::cin >> b;
    std::cout << "Result is: " << res << std::endl;
    res = gcd(a, b);
-   res = 42;
    std::cout << "Result is: " << res << std::endl;
   return 0;
 }

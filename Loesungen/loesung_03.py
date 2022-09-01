@@ -1,5 +1,4 @@
-
-from solution_lib import *
+from library import *
 
 
 if __name__ == "__main__":
@@ -8,5 +7,5 @@ if __name__ == "__main__":
     number_2=input("Zahl 2? ")
     number_2=int(number_2)
 
-    res = gcd(number_1, number_2)
+    res = lcm(number_1, number_2)
     print("Result is %d" % res) 

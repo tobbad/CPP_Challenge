@@ -5,8 +5,9 @@ set(CMAKE_CXX_STANDARD 14)
 set(CMAKE_C_STANDARD 99)
 include_directories(${PROJECT_SOURCE_DIR})
 add_executable(loesung_01 loesung_01.cpp)
-add_executable(loesung_02 loesung_02.cpp library.c library.h)
-add_executable(loesung_03 loesung_03.cpp library.c library.h)
+set_source_files_properties(library.c  PROPERTIES LANGUAGE C)
+add_executable(loesung_02 loesung_02.cpp library.cpp library.h)
+add_executable(loesung_03 loesung_03.cpp library.cpp library.h)
 target_include_directories(loesung_01 PUBLIC ${POJRCT_BINARY_DIR})
 #target_include_directories(CPP_Challenge PUBLIC
 #                          "${PROJECT_BINARY_DIR}"

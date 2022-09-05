@@ -8,6 +8,7 @@ add_executable(loesung_01 loesung_01.cpp)
 set_source_files_properties(library.c  PROPERTIES LANGUAGE C)
 add_executable(loesung_02 loesung_02.cpp library.cpp library.h)
 add_executable(loesung_03 loesung_03.cpp library.cpp library.h)
+add_executable(loesung_04 loesung_04.cpp library.cpp library.h)
 target_include_directories(loesung_01 PUBLIC ${POJRCT_BINARY_DIR})
 #target_include_directories(CPP_Challenge PUBLIC
 #                          "${PROJECT_BINARY_DIR}"

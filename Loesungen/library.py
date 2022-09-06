@@ -1,3 +1,5 @@
+from math import *
+
 def gcd(a,b):
     if b==0:
         return a
@@ -12,14 +14,14 @@ def lcm(a,b):
     else:
         return 0
 
-def isPrim(limite):
-    if (limite<=3):
-        return limite >1
-    elif (limite%2==0) or (limite%3==0):
-        return False
+def isPrim(lim):
+    if (lim<3):
+        return lim >1
     else:
-        for i in range(5,limite+1,2):
-            if (limite%i) or limite%(i+2):
+        checkLim=int(ceil(sqrt((lim))))
+        #print("Check up to %d" % (checkLim))
+        for i in range(2,checkLim+1):
+            #print("Check %d" %i)
+            if lim%i==0:
                 return False
     return True
-    

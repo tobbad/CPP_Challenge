@@ -24,22 +24,21 @@ int  lcm(int a, int b)
 }
 
 
-int isPrim(int limite)
+bool isPrim(int limite)
 {
-	bool isPrim=false;
 	if ((limite==1) || (limite==2))
-		return false;
-	else if ((limite%2==0) || (limite%3 ==0)) 
-		return false;
+		return (limite>1);
 	else
 	{
-		for (int i=5;i*i<limite;i+=6)
+		upLim=floor(sqrt(limite));
+		for (int i=2;i<upLim;i++)
 		{
-			if (limite%i==0)
+			if (limit%i==0)
 			{
 				return false;
 			}		
 		}
 		return true;
 	}
+	return false;
 }

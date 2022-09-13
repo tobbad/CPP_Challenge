@@ -25,3 +25,13 @@ def isPrim(lim):
             if lim%i==0:
                 return False
     return True
+
+def sum_proper_divisors(num):
+    res = 1
+    for i in range(2,int(ceil(sqrt(num)))):
+        #print("Check %d" %i)
+        if num%i==0:
+            res+=i if (i==num/i) else (i+num/i)
+    #print("num: %d Sum %d" %(num, res))
+    return res
+    

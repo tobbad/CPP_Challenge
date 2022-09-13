@@ -1,4 +1,5 @@
 #include <iostream>
+#include <math.h>
 #include "library.h"
 using namespace std;
 
@@ -30,10 +31,10 @@ bool isPrim(int limite)
 		return (limite>1);
 	else
 	{
-		upLim=floor(sqrt(limite));
+		int upLim=floor(sqrt(limite));
 		for (int i=2;i<upLim;i++)
 		{
-			if (limit%i==0)
+			if (limite%i==0)
 			{
 				return false;
 			}		
@@ -41,4 +42,16 @@ bool isPrim(int limite)
 		return true;
 	}
 	return false;
+}
+
+int sum_proper_divisors(int num){
+	int result=1;
+	for (int i=2;i<std::sqrt(num);i++){
+		if (num%i==0)
+		{
+			result+=(i==(num%i)?i:(i+num/i));
+		}
+	}
+	//std::cout << num << " Sum " << result<< std::endl;
+	return result;
 }

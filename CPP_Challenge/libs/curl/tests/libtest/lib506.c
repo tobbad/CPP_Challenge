@@ -5,11 +5,11 @@
  *                            | (__| |_| |  _ <| |___
  *                             \___|\___/|_| \_\_____|
  *
- * Copyright (C) 1998 - 2017, Daniel Stenberg, <daniel@haxx.se>, et al.
+ * Copyright (C) 1998 - 2022, Daniel Stenberg, <daniel@haxx.se>, et al.
  *
  * This software is licensed as described in the file COPYING, which
  * you should have received as part of this distribution. The terms
- * are also available at https://curl.haxx.se/docs/copyright.html.
+ * are also available at https://curl.se/docs/copyright.html.
  *
  * You may opt to use, copy, modify, merge, publish, distribute and/or sell
  * copies of the Software, and permit persons to whom the Software is
@@ -17,6 +17,8 @@
  *
  * This software is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY
  * KIND, either express or implied.
+ *
+ * SPDX-License-Identifier: curl
  *
  ***************************************************************************/
 #include "test.h"
@@ -131,7 +133,6 @@ static void *fire(void *ptr)
   struct curl_slist *headers;
   struct Tdata *tdata = (struct Tdata*)ptr;
   CURL *curl;
-  int i = 0;
 
   curl = curl_easy_init();
   if(!curl) {
@@ -143,12 +144,14 @@ static void *fire(void *ptr)
   curl_easy_setopt(curl, CURLOPT_VERBOSE,    1L);
   curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);
   curl_easy_setopt(curl, CURLOPT_URL,        tdata->url);
+  curl_easy_setopt(curl, CURLOPT_COOKIEFILE, "");
   printf("CURLOPT_SHARE\n");
   curl_easy_setopt(curl, CURLOPT_SHARE, tdata->share);
 
   printf("PERFORM\n");
   code = curl_easy_perform(curl);
   if(code) {
+    int i = 0;
     fprintf(stderr, "perform url '%s' repeat %d failed, curlcode %d\n",
             tdata->url, i, (int)code);
   }
@@ -377,4 +380,3 @@ test_cleanup:
 
   return res;
 }
-

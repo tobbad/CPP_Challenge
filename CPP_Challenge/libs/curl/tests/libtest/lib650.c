@@ -5,11 +5,11 @@
  *                            | (__| |_| |  _ <| |___
  *                             \___|\___/|_| \_\_____|
  *
- * Copyright (C) 1998 - 2017, Daniel Stenberg, <daniel@haxx.se>, et al.
+ * Copyright (C) 1998 - 2022, Daniel Stenberg, <daniel@haxx.se>, et al.
  *
  * This software is licensed as described in the file COPYING, which
  * you should have received as part of this distribution. The terms
- * are also available at https://curl.haxx.se/docs/copyright.html.
+ * are also available at https://curl.se/docs/copyright.html.
  *
  * You may opt to use, copy, modify, merge, publish, distribute and/or sell
  * copies of the Software, and permit persons to whom the Software is
@@ -18,20 +18,15 @@
  * This software is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY
  * KIND, either express or implied.
  *
+ * SPDX-License-Identifier: curl
+ *
  ***************************************************************************/
 #include "test.h"
 
 #include "memdebug.h"
 
 static char data[] =
-#ifdef CURL_DOES_CONVERSIONS
-  /* ASCII representation with escape sequences for non-ASCII platforms */
-  "\x74\x68\x69\x73\x20\x69\x73\x20\x77\x68\x61\x74\x20\x77\x65\x20\x70"
-  "\x6f\x73\x74\x20\x74\x6f\x20\x74\x68\x65\x20\x73\x69\x6c\x6c\x79\x20"
-  "\x77\x65\x62\x20\x73\x65\x72\x76\x65\x72";
-#else
   "this is what we post to the silly web server";
-#endif
 
 static const char name[] = "fieldname";
 
@@ -62,6 +57,7 @@ int test(char *URL)
   struct curl_forms formarray[3];
   size_t formlength = 0;
   char flbuf[32];
+  long contentlength = 0;
 
   if(curl_global_init(CURL_GLOBAL_ALL) != CURLE_OK) {
     fprintf(stderr, "curl_global_init() failed\n");
@@ -94,11 +90,13 @@ int test(char *URL)
     goto test_cleanup;
   }
 
+  contentlength = (long)(strlen(data) - 1);
+
   /* Use a form array for the non-copy test. */
   formarray[0].option = CURLFORM_PTRCONTENTS;
   formarray[0].value = data;
   formarray[1].option = CURLFORM_CONTENTSLENGTH;
-  formarray[1].value = (char *) strlen(data) - 1;
+  formarray[1].value = (char *)(size_t)contentlength;
   formarray[2].option = CURLFORM_END;
   formarray[2].value = NULL;
   formrc = curl_formadd(&formpost,
@@ -153,7 +151,7 @@ int test(char *URL)
   curl_formget(formpost, (void *) &formlength, count_chars);
 
   /* Include length in data for external check. */
-  curl_msnprintf(flbuf, sizeof flbuf, "%lu", (unsigned long) formlength);
+  curl_msnprintf(flbuf, sizeof(flbuf), "%lu", (unsigned long) formlength);
   formrc = curl_formadd(&formpost,
                         &lastptr,
                         CURLFORM_COPYNAME, "formlength",

@@ -6,11 +6,11 @@
 #                            | (__| |_| |  _ <| |___
 #                             \___|\___/|_| \_\_____|
 #
-# Copyright (C) 2010-2011, Daniel Stenberg, <daniel@haxx.se>, et al.
+# Copyright (C) 2010 - 2022, Daniel Stenberg, <daniel@haxx.se>, et al.
 #
 # This software is licensed as described in the file COPYING, which
 # you should have received as part of this distribution. The terms
-# are also available at https://curl.haxx.se/docs/copyright.html.
+# are also available at https://curl.se/docs/copyright.html.
 #
 # You may opt to use, copy, modify, merge, publish, distribute and/or sell
 # copies of the Software, and permit persons to whom the Software is
@@ -19,10 +19,12 @@
 # This software is distributed on an "AS IS" basis, WITHOUT WARRANTY OF ANY
 # KIND, either express or implied.
 #
+# SPDX-License-Identifier: curl
+#
 ###########################################################################
 #
 # This script grew out of help from Przemyslaw Iskra and Balint Szilakszi
-# a late evening in the #curl IRC channel on freenode.
+# a late evening in the #curl IRC channel.
 #
 
 use strict;
@@ -53,6 +55,8 @@ my $i = ($ARGV[1]) ? "-I$ARGV[1] " : '';
 
 my $h = "$root/include/curl/curl.h";
 my $mh = "$root/include/curl/multi.h";
+my $ua = "$root/include/curl/urlapi.h";
+my $hd = "$root/include/curl/header.h";
 
 my $verbose=0;
 my $summary=0;
@@ -62,17 +66,23 @@ my @syms;
 my %doc;
 my %rem;
 
-open H_IN, "-|", "$Cpreprocessor $i$h" || die "Cannot preprocess curl.h";
-while ( <H_IN> ) {
-    if ( /enum\s+(\S+\s+)?{/ .. /}/ ) {
-        s/^\s+//;
-        next unless /^CURL/;
-        chomp;
-        s/[,\s].*//;
-        push @syms, $_;
+# scanenum runs the preprocessor on curl.h so it will process all enums
+# included by it, which *should* be all headers
+sub scanenum {
+    my ($file) = @_;
+    open H_IN, "-|", "$Cpreprocessor $i$file" || die "Cannot preprocess $file";
+    while ( <H_IN> ) {
+        if ( /enum\s+(\S+\s+)?{/ .. /}/ ) {
+            s/^\s+//;
+            next unless /^CURL/;
+            chomp;
+            s/[,\s].*//;
+            push @syms, $_;
+            print STDERR "$_\n";
+        }
     }
+    close H_IN || die "Error preprocessing $file";
 }
-close H_IN || die "Error preprocessing curl.h";
 
 sub scanheader {
     my ($f)=@_;
@@ -85,8 +95,11 @@ sub scanheader {
     close H;
 }
 
+scanenum($h);
 scanheader($h);
 scanheader($mh);
+scanheader($ua);
+scanheader($hd);
 
 open S, "<$root/docs/libcurl/symbols-in-versions";
 while(<S>) {
@@ -117,11 +130,13 @@ for my $e (sort @syms) {
     # CURL_EXTERN - is a define used for libcurl functions that are external,
     # public. No app or other code should ever use it.
     #
+    # CURLINC_ - defines for header dual-include prevention, ignore those.
+    #
     # *_LAST and *_LASTENTRY are just prefix for the placeholders used for the
     # last entry in many enum series.
     #
 
-    if($e =~ /(OBSOLETE|^CURL_EXTERN|_LAST\z|_LASTENTRY\z)/) {
+    if($e =~ /(OBSOLETE|^CURL_EXTERN|^CURLINC_|_LAST\z|_LASTENTRY\z)/) {
         $ignored++;
         next;
     }
@@ -172,5 +187,8 @@ if($summary) {
 }
 
 if($misses) {
-    exit 2; # there are stuff to attend to!
+    exit 0; # there are stuff to attend to!
+}
+else {
+    print "OK\n";
 }

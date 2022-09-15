@@ -27,9 +27,8 @@
 
 
 
-class PDFNameLess
+struct PDFNameLess
 {
-public:
 	bool operator( ) (const PDFName* left, 
 						const PDFName* right ) const
 	{

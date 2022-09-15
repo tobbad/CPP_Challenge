@@ -35,10 +35,15 @@ _.swp
 *.opensdf
 *.cache
 
-#XCode unwanted#
+#XCode/OSX unwanted#
 ################
 xcode/Build
 xcode/DerivedData
+.DS_Store
+
+#VSCode unswated#
+#################
+.vscode
 
 #unwanted other sources #
 ########################
@@ -51,3 +56,6 @@ jpegsr8d
 jpeg-8d
 *.gz
 Downloads
+
+# notes etc.
+etc

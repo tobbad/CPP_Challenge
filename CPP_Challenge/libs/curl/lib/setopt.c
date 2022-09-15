@@ -148,12 +148,12 @@ static CURLcode setstropt_userpwd(char *option, char **userp, char **passwdp)
 #define C_SSLVERSION_VALUE(x) (x & 0xffff)
 #define C_SSLVERSION_MAX_VALUE(x) (x & 0xffff0000)
 
-static CURLcode protocol2num(char *str, curl_off_t *val)
+static CURLcode protocol2num(char *str, curl_prot_t *val)
 {
   bool found_comma = FALSE;
   static struct scheme {
     const char *name;
-    long bit;
+    curl_prot_t bit;
   } const protos[] = {
     { "dict", CURLPROTO_DICT },
     { "file", CURLPROTO_FILE },
@@ -185,13 +185,17 @@ static CURLcode protocol2num(char *str, curl_off_t *val)
     { "smtps", CURLPROTO_SMTPS },
     { "telnet", CURLPROTO_TELNET },
     { "tftp", CURLPROTO_TFTP },
+#ifdef USE_WEBSOCKETS
+    { "ws", CURLPROTO_WS },
+    { "wss", CURLPROTO_WSS },
+#endif
     { NULL, 0 }
   };
 
   if(!str)
     return CURLE_BAD_FUNCTION_ARGUMENT;
   else if(curl_strequal(str, "all")) {
-    *val = ~0;
+    *val = (curl_prot_t)~0;
     return CURLE_OK;
   }
 
@@ -2430,9 +2434,14 @@ CURLcode Curl_vsetopt(struct Curl_easy *data, CURLoption option, va_list param)
 
   case CURLOPT_CONNECT_ONLY:
     /*
-     * No data transfer, set up connection and let application use the socket
+     * No data transfer.
+     * (1) - only do connection
+     * (2) - do first get request but get no content
      */
-    data->set.connect_only = (0 != va_arg(param, long)) ? TRUE : FALSE;
+    arg = va_arg(param, long);
+    if(arg > 2)
+      return CURLE_BAD_FUNCTION_ARGUMENT;
+    data->set.connect_only = (unsigned char)arg;
     break;
 
   case CURLOPT_SOCKOPTFUNCTION:
@@ -2640,31 +2649,35 @@ CURLcode Curl_vsetopt(struct Curl_easy *data, CURLoption option, va_list param)
        transfer, which thus helps the app which takes URLs from users or other
        external inputs and want to restrict what protocol(s) to deal
        with. Defaults to CURLPROTO_ALL. */
-    data->set.allowed_protocols = (curl_off_t)va_arg(param, long);
+    data->set.allowed_protocols = (curl_prot_t)va_arg(param, long);
     break;
 
   case CURLOPT_REDIR_PROTOCOLS:
     /* set the bitmask for the protocols that libcurl is allowed to follow to,
        as a subset of the CURLOPT_PROTOCOLS ones. That means the protocol needs
        to be set in both bitmasks to be allowed to get redirected to. */
-    data->set.redir_protocols = (curl_off_t)va_arg(param, long);
+    data->set.redir_protocols = (curl_prot_t)va_arg(param, long);
     break;
 
-  case CURLOPT_PROTOCOLS_STR:
+  case CURLOPT_PROTOCOLS_STR: {
+    curl_prot_t prot;
     argptr = va_arg(param, char *);
-    result = protocol2num(argptr, &bigsize);
+    result = protocol2num(argptr, &prot);
     if(result)
       return result;
-    data->set.allowed_protocols = bigsize;
+    data->set.allowed_protocols = prot;
     break;
+  }
 
-  case CURLOPT_REDIR_PROTOCOLS_STR:
+  case CURLOPT_REDIR_PROTOCOLS_STR: {
+    curl_prot_t prot;
     argptr = va_arg(param, char *);
-    result = protocol2num(argptr, &bigsize);
+    result = protocol2num(argptr, &prot);
     if(result)
       return result;
-    data->set.redir_protocols = bigsize;
+    data->set.redir_protocols = prot;
     break;
+  }
 
   case CURLOPT_DEFAULT_PROTOCOL:
     /* Set the protocol to use when the URL doesn't include any protocol */
@@ -2952,7 +2965,6 @@ CURLcode Curl_vsetopt(struct Curl_easy *data, CURLoption option, va_list param)
 #endif
     break;
   case CURLOPT_SSL_ENABLE_NPN:
-    data->set.ssl_enable_npn = (0 != va_arg(param, long)) ? TRUE : FALSE;
     break;
   case CURLOPT_SSL_ENABLE_ALPN:
     data->set.ssl_enable_alpn = (0 != va_arg(param, long)) ? TRUE : FALSE;
@@ -3128,6 +3140,15 @@ CURLcode Curl_vsetopt(struct Curl_easy *data, CURLoption option, va_list param)
   case CURLOPT_PREREQDATA:
     data->set.prereq_userp = va_arg(param, void *);
     break;
+#ifdef USE_WEBSOCKETS
+  case CURLOPT_WS_OPTIONS: {
+    bool raw;
+    arg = va_arg(param, long);
+    raw = (arg & CURLWS_RAW_MODE);
+    data->set.ws_raw_mode = raw;
+    break;
+  }
+#endif
   default:
     /* unknown tag and its companion, just ignore: */
     result = CURLE_UNKNOWN_OPTION;

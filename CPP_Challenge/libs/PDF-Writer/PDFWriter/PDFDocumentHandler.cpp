@@ -482,7 +482,7 @@ EStatusCode PDFDocumentHandler::CopyResourcesIndirectObjects(PDFDictionary* inPa
 	// if indirect, run CopyInDirectObject on it (passing its ID and a new ID at the target PDF (just allocate as you go))
 	// if direct, let go.
 
-	PDFObjectCastPtr<PDFDictionary> resources(mParser->QueryDictionaryObject(inPage,"Resources"));
+	PDFObjectCastPtr<PDFDictionary> resources(FindPageResources(mParser, inPage));
 
 	// k. no resources...as wierd as that might be...or just wrong...i'll let it be
 	if(!resources)
@@ -629,7 +629,7 @@ EStatusCode PDFDocumentHandler::OnResourcesWrite(
 	// Writing resources dictionary. simply loop internal elements and copy. nicely enough, i can use read methods, trusting
 	// that no new objects need be written
 	
-	PDFObjectCastPtr<PDFDictionary> resources(mParser->QueryDictionaryObject(mWrittenPage,"Resources"));
+	PDFObjectCastPtr<PDFDictionary> resources(FindPageResources(mParser, mWrittenPage));
 	ObjectIDTypeList dummyObjectList; // this one should remain empty...
 
 	// k. no resources...as wierd as that might be...or just wrong...i'll let it be
@@ -1343,7 +1343,7 @@ EStatusCode PDFDocumentHandler::MergeResourcesToPage(PDFPage* inTargetPage,PDFDi
 {
 	// parse each individual resources dictionary separately and copy the resources. the output parameter should be used for old vs. new names
 	
-	PDFObjectCastPtr<PDFDictionary> resources(mParser->QueryDictionaryObject(inPage,"Resources"));
+	PDFObjectCastPtr<PDFDictionary> resources(FindPageResources(mParser, inPage));
 
 	// k. no resources...as wierd as that might be...or just wrong...i'll let it be
 	if(!resources)
@@ -2018,9 +2018,24 @@ EStatusCode PDFDocumentHandler::WriteStreamObject(PDFStreamInput* inStream, IObj
 
 	MapIterator<PDFNameToPDFObjectMap> it(streamDictionary->GetIterator());
 	EStatusCode status = PDFHummus::eSuccess;
+	bool readingDecrypted = false;
+	IByteReader* streamReader = NULL;
+
+	/*
+	*	To support unencrypted pdf output, mostly used for debugging, (and maybe i should put a general flag there),
+	*	add ability here to copy by rewriting the streams...when possible.
+	*/
+	if(!mObjectsContext->IsCompressingStreams()) {
+		streamReader = mParser->StartReadingFromStream(inStream);
+		readingDecrypted = streamReader != NULL;
+	}	
+	if(!readingDecrypted) {
+		streamReader = mParser->StartReadingFromStreamForPlainCopying(inStream);
+	}
+	
 	while (it.MoveNext() && PDFHummus::eSuccess == status)
 	{
-		if (it.GetKey()->GetValue() != "Length") {
+		if (it.GetKey()->GetValue() != "Length" && (!readingDecrypted || it.GetKey()->GetValue() != "Filter")) {
 			status = newStreamDictionary->WriteKey(it.GetKey()->GetValue());
 			if (PDFHummus::eSuccess == status)
 				status = WriteObjectByType(it.GetValue(), eTokenSeparatorEndLine, inWritePolicy);
@@ -2033,9 +2048,10 @@ EStatusCode PDFDocumentHandler::WriteStreamObject(PDFStreamInput* inStream, IObj
 		return PDFHummus::eFailure;
 	}
 
-	PDFStream* newStream = mObjectsContext->StartUnfilteredPDFStream(newStreamDictionary);
+	PDFStream* newStream = readingDecrypted ? 
+		mObjectsContext->StartPDFStream(newStreamDictionary) :
+		mObjectsContext->StartUnfilteredPDFStream(newStreamDictionary);
 	OutputStreamTraits outputTraits(newStream->GetWriteStream());
-	IByteReader* streamReader = mParser->StartReadingFromStreamForPlainCopying(inStream);
 
 	status = outputTraits.CopyToOutputStream(streamReader);
 	if (status != PDFHummus::eSuccess)
@@ -2219,7 +2235,7 @@ EStatusCode PDFDocumentHandler::RegisterResourcesForForm(PDFFormXObject* inTarge
     
     do 
     {
-        PDFObjectCastPtr<PDFDictionary> resources(mParser->QueryDictionaryObject(inPageObject,"Resources"));
+		PDFObjectCastPtr<PDFDictionary> resources(FindPageResources(mParser, inPageObject));
         
         // k. no resources...as wierd as that might be...or just wrong...i'll let it be
         if(!resources)
@@ -2440,4 +2456,23 @@ private:
 void PDFDocumentHandler::RegisterFormRelatedObjects(PDFFormXObject* inFormXObject,const ObjectIDTypeList& inObjectsToWrite)
 {
     mDocumentContext->RegisterFormEndWritingTask(inFormXObject,new ObjectsCopyingTask(this,inObjectsToWrite));
+}
+
+PDFObject* PDFDocumentHandler::FindPageResources(PDFParser* inParser, PDFDictionary* inDictionary) {
+	if(inDictionary->Exists("Resources")) {
+		return inParser->QueryDictionaryObject(inDictionary, "Resources");
+	}
+	else {
+		PDFObjectCastPtr<PDFDictionary> parentDict(
+			inDictionary->Exists("Parent") ? 
+				inParser->QueryDictionaryObject(inDictionary, "Parent"): 
+				NULL);
+		if(!parentDict) {
+			return NULL;
+		}
+		else {
+			return FindPageResources(inParser,parentDict.GetPtr());
+		}
+		
+	}	
 }

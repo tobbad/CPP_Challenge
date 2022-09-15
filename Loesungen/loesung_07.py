@@ -4,5 +4,5 @@ from library import *
 if __name__ == "__main__":
     print("$freundliche Zahlen")
     limit=input("Obere Grenze? ")
-    limit=int(float(limit))
+    limit=int(float(limit))cd ..
     print_amicables(limit)

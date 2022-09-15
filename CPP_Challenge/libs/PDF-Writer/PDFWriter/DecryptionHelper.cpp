@@ -36,6 +36,8 @@ limitations under the License.
 #include "InputRC4XcodeStream.h"
 #include "InputAESDecodeStream.h"
 #include "Trace.h"
+#include "Deletable.h"
+#include <memory>
 
 using namespace std;
 using namespace PDFHummus;
@@ -205,7 +207,11 @@ EStatusCode DecryptionHelper::Setup(PDFParser* inParser, const string& inPasswor
 				// read crypt filters
 				while (cryptFiltersIt.MoveNext())
 				{
-					PDFObjectCastPtr<PDFDictionary> cryptFilter(cryptFiltersIt.GetValue());
+					PDFObjectCastPtr<PDFDictionary> cryptFilter;
+					// A little caveat of those smart ptrs need to be handled here
+					// make sure to pass the pointer after init...otherwise cast wont do addref
+					// and object will be released
+					cryptFilter = cryptFiltersIt.GetValue();
 					if (!!cryptFilter) {
 						PDFObjectCastPtr<PDFName> cfmName(inParser->QueryDictionaryObject(cryptFilter.GetPtr(), "CFM"));
 						RefCountPtr<PDFObject> lengthObject(inParser->QueryDictionaryObject(cryptFilter.GetPtr(), "Length"));
@@ -328,9 +334,9 @@ IByteReader* DecryptionHelper::CreateDefaultDecryptionFilterForStream(PDFStreamI
 	if (!IsEncrypted() || !CanDecryptDocument() || HasCryptFilterDefinition(mParser, inStream) || !mXcryptStreams)
 		return NULL;
 	
-	void* savedEcnryptionKey = inStream->GetMetadata(scEcnryptionKeyMetadataKey);
+	IDeletable* savedEcnryptionKey = inStream->GetMetadata(scEcnryptionKeyMetadataKey);
 	if (savedEcnryptionKey) {
-		return CreateDecryptionReader(inToWrapStream, *((ByteList*)savedEcnryptionKey), mXcryptStreams->IsUsingAES());
+		return CreateDecryptionReader(inToWrapStream, *(((Deletable<ByteList>*)savedEcnryptionKey)->GetPtr()), mXcryptStreams->IsUsingAES());
 	}
 	else 
 		return NULL;
@@ -341,7 +347,7 @@ IByteReader*  DecryptionHelper::CreateDecryptionFilterForStream(PDFStreamInput* 
 	if (!IsEncrypted() || !CanDecryptDocument())
 		return inToWrapStream;
 
-	void* savedEcnryptionKey = inStream->GetMetadata(scEcnryptionKeyMetadataKey);
+	IDeletable* savedEcnryptionKey = inStream->GetMetadata(scEcnryptionKeyMetadataKey);
 	if (!savedEcnryptionKey) {
 		// sign for no encryption here
 		return inToWrapStream;
@@ -349,7 +355,7 @@ IByteReader*  DecryptionHelper::CreateDecryptionFilterForStream(PDFStreamInput* 
 	XCryptionCommon* xcryption = GetFilterForName(mXcrypts, inCryptName);
 
 	if (xcryption && savedEcnryptionKey) {
-		return CreateDecryptionReader(inToWrapStream, *((ByteList*)savedEcnryptionKey), xcryption->IsUsingAES());
+		return CreateDecryptionReader(inToWrapStream, *(((Deletable<ByteList>*)savedEcnryptionKey)->GetPtr()), xcryption->IsUsingAES());
 	}
 	else
 		return inToWrapStream;
@@ -370,6 +376,7 @@ std::string DecryptionHelper::DecryptString(const std::string& inStringToDecrypt
 		OutputStreamTraits traits(&outputStream);
 		traits.CopyToOutputStream(decryptStream);
 
+		delete decryptStream;
 		return outputStream.ToString();
 	}
 	else
@@ -440,12 +447,15 @@ XCryptionCommon* DecryptionHelper::GetCryptForStream(PDFStreamInput* inStream) {
 }
 
 void DecryptionHelper::OnObjectEnd(PDFObject* inObject) {
+	if (inObject == NULL)
+		return;
+	
 	// for streams, retain the encryption key with them, so i can later decrypt them when needed
 	if ((inObject->GetType() == PDFObject::ePDFObjectStream) && IsDecrypting()) {
 		XCryptionCommon* streamCryptFilter = GetCryptForStream((PDFStreamInput*)inObject);
 		if (streamCryptFilter) {
 			ByteList* savedKey = new ByteList(streamCryptFilter->GetCurrentObjectKey());
-			inObject->SetMetadata(scEcnryptionKeyMetadataKey, savedKey);
+			inObject->SetMetadata(scEcnryptionKeyMetadataKey,new Deletable<ByteList>(savedKey));
 		}
 	}
 

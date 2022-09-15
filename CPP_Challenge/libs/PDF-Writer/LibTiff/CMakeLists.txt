@@ -1,4 +1,4 @@
-cmake_minimum_required (VERSION 2.6) 
+cmake_minimum_required (VERSION 2.8.12) 
 project(LibTiff)
 
 set(LIBTIFF_INCLUDE_DIRS ${LibTiff_SOURCE_DIR} PARENT_SCOPE)
@@ -24,7 +24,7 @@ add_definitions(
 -DTIF_PLATFORM_CONSOLE=1
 -DFILLODER_LSB2MSB=1)
 
-add_library (LibTiff 
+add_library (LibTiff_OBJLIB OBJECT 
 #sources
 tif_aux.c
 tif_close.c
@@ -84,4 +84,24 @@ uvcode.h
 
 )
 
-set_target_properties (LibTiff PROPERTIES FOLDER "00.Libs")
+set(LibTiff_OBJECTS $<TARGET_OBJECTS:LibTiff_OBJLIB>)
+set(LibTiff_OBJECTS $<TARGET_OBJECTS:LibTiff_OBJLIB> PARENT_SCOPE)
+
+if(IS_XCODE)
+    add_library(LibTiff ${LibTiff_OBJECTS} tif_zip.c)
+else(IS_XCODE)
+    add_library(LibTiff ${LibTiff_OBJECTS})
+endif(IS_XCODE)
+
+target_link_libraries(LibTiff ${ZLIB_LDFLAGS})
+
+install(TARGETS LibTiff
+    RUNTIME DESTINATION bin COMPONENT dependencies
+    ARCHIVE DESTINATION lib${LIB_SUFFIX} COMPONENT dependencies
+    LIBRARY DESTINATION lib${LIB_SUFFIX} COMPONENT dependencies
+)
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}
+    DESTINATION include
+    FILES_MATCHING
+    PATTERN "*.h"
+)

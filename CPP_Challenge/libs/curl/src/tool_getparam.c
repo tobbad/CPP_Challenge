@@ -740,7 +740,7 @@ ParameterError getparameter(const char *flag, /* f or -long-flag */
         global->tracetype = TRACE_BIN;
         break;
       case 'G': /* --npn */
-        config->nonpn = (!toggle)?TRUE:FALSE;
+        warnf(global, "--npn is no longer supported\n");
         break;
       case 'h': /* --trace-ascii */
         GetStr(&global->trace_dump, nextarg);
@@ -2045,13 +2045,11 @@ ParameterError getparameter(const char *flag, /* f or -long-flag */
       break;
     case 'M': /* M for manual, huge help */
       if(toggle) { /* --no-manual shows no manual... */
-#ifdef USE_MANUAL
-        return PARAM_MANUAL_REQUESTED;
-#else
+#ifndef USE_MANUAL
         warnf(global,
               "built-in manual was disabled at build-time!\n");
-        return PARAM_OPTION_UNKNOWN;
 #endif
+        return PARAM_MANUAL_REQUESTED;
       }
       break;
     case 'n':

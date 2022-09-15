@@ -128,7 +128,6 @@ bool curl_win32_idn_to_ascii(const char *in, char **out);
 #include "http_proxy.h"
 #include "conncache.h"
 #include "multihandle.h"
-#include "dotdot.h"
 #include "strdup.h"
 #include "setopt.h"
 #include "altsvc.h"
@@ -168,7 +167,7 @@ static void conn_free(struct connectdata *conn);
 *
 * Returns the family as a single bit protocol identifier.
 */
-static unsigned int get_protocol_family(const struct Curl_handler *h)
+static curl_prot_t get_protocol_family(const struct Curl_handler *h)
 {
   DEBUGASSERT(h);
   DEBUGASSERT(h->family);
@@ -190,6 +189,16 @@ static const struct Curl_handler * const protocols[] = {
 
 #ifndef CURL_DISABLE_HTTP
   &Curl_handler_http,
+#endif
+
+#ifdef USE_WEBSOCKETS
+#if defined(USE_SSL) && !defined(CURL_DISABLE_HTTP)
+  &Curl_handler_wss,
+#endif
+
+#ifndef CURL_DISABLE_HTTP
+  &Curl_handler_ws,
+#endif
 #endif
 
 #ifndef CURL_DISABLE_FTP
@@ -623,7 +632,6 @@ CURLcode Curl_init_userdefined(struct Curl_easy *data)
   set->tcp_keepidle = 60;
   set->tcp_fastopen = FALSE;
   set->tcp_nodelay = TRUE;
-  set->ssl_enable_npn = TRUE;
   set->ssl_enable_alpn = TRUE;
   set->expect_100_timeout = 1000L; /* Wait for a second by default. */
   set->sep_headers = TRUE; /* separated header lists by default */
@@ -869,7 +877,7 @@ void Curl_disconnect(struct Curl_easy *data,
   /* Cleanup NEGOTIATE connection-related data */
   Curl_http_auth_cleanup_negotiate(conn);
 
-  if(conn->bits.connect_only)
+  if(conn->connect_only)
     /* treat the connection as dead in CONNECT_ONLY situations */
     dead_connection = TRUE;
 
@@ -955,14 +963,16 @@ socks_proxy_info_matches(const struct proxy_info *data,
      see https://datatracker.ietf.org/doc/html/rfc3986#section-3.2.1 */
   if(!data->user != !needle->user)
     return FALSE;
-  /* curl_strequal does a case insentive comparison, so do not use it here! */
+  /* curl_strequal does a case insensitive comparison,
+     so do not use it here! */
   if(data->user &&
      needle->user &&
      strcmp(data->user, needle->user) != 0)
     return FALSE;
   if(!data->passwd != !needle->passwd)
     return FALSE;
-  /* curl_strequal does a case insentive comparison, so do not use it here! */
+  /* curl_strequal does a case insensitive comparison,
+     so do not use it here! */
   if(data->passwd &&
      needle->passwd &&
      strcmp(data->passwd, needle->passwd) != 0)
@@ -1215,7 +1225,7 @@ ConnectionExists(struct Curl_easy *data,
       check = curr->ptr;
       curr = curr->next;
 
-      if(check->bits.connect_only || check->bits.close)
+      if(check->connect_only || check->bits.close)
         /* connect-only or to-be-closed connections will not be reused */
         continue;
 
@@ -1799,7 +1809,7 @@ static struct connectdata *allocate_conn(struct Curl_easy *data)
   conn->proxy_ssl_config.ssl_options = data->set.proxy_ssl.primary.ssl_options;
 #endif
   conn->ip_version = data->set.ipver;
-  conn->bits.connect_only = data->set.connect_only;
+  conn->connect_only = data->set.connect_only;
   conn->transport = TRNSPRT_TCP; /* most of them are TCP streams */
 
 #if !defined(CURL_DISABLE_HTTP) && defined(USE_NTLM) && \
@@ -1985,7 +1995,7 @@ static CURLcode parseurlandfillconn(struct Curl_easy *data,
     return CURLE_OUT_OF_MEMORY;
 
   if(data->set.str[STRING_DEFAULT_PROTOCOL] &&
-     !Curl_is_absolute_url(data->state.url, NULL, 0)) {
+     !Curl_is_absolute_url(data->state.url, NULL, 0, TRUE)) {
     char *url = aprintf("%s://%s", data->set.str[STRING_DEFAULT_PROTOCOL],
                         data->state.url);
     if(!url)
@@ -2375,7 +2385,7 @@ static char *detect_proxy(struct Curl_easy *data,
 
   /* Now, build <protocol>_proxy and check for such a one to use */
   while(*protop)
-    *envp++ = (char)tolower((int)*protop++);
+    *envp++ = Curl_raw_tolower(*protop++);
 
   /* append _proxy */
   strcpy(envp, "_proxy");
@@ -4025,13 +4035,11 @@ static CURLcode create_conn(struct Curl_easy *data,
        be able to do that if we have reached the limit of how many
        connections we are allowed to open. */
 
-    if(conn->handler->flags & PROTOPT_ALPN_NPN) {
+    if(conn->handler->flags & PROTOPT_ALPN) {
       /* The protocol wants it, so set the bits if enabled in the easy handle
          (default) */
       if(data->set.ssl_enable_alpn)
         conn->bits.tls_enable_alpn = TRUE;
-      if(data->set.ssl_enable_npn)
-        conn->bits.tls_enable_npn = TRUE;
     }
 
     if(waitpipe)

@@ -22,8 +22,7 @@
 .\" *
 .\" **************************************************************************
 .\"
-.TH CURLOPT_PROXY_SSLCERT_BLOB 3 "May 17, 2022" "libcurl 7.85.0" "curl_easy_setopt options"
-
+.TH CURLOPT_PROXY_SSLCERT_BLOB 3 "24 Jun 2020" "libcurl 7.71.0" "curl_easy_setopt options"
 .SH NAME
 CURLOPT_PROXY_SSLCERT_BLOB \- SSL proxy client certificate from memory blob
 .SH SYNOPSIS
@@ -49,7 +48,7 @@ expects a file name as input.
 .SH DEFAULT
 NULL
 .SH PROTOCOLS
-All TLS based protocols: HTTPS, FTPS, IMAPS, POP3S, SMTPS etc.
+Used with HTTPS proxy
 .SH EXAMPLE
 .nf
 CURL *curl = curl_easy_init();

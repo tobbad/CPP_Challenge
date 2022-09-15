@@ -2,7 +2,7 @@ from library import *
 
 
 if __name__ == "__main__":
-    print("Abundnte Zahlen")
+    print("Abundante Zahlen")
     limite=input("Obere Grenze? ")
     limite=int(limite)
     for i in range(10, limite+1):    

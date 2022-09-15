@@ -8,9 +8,9 @@ using namespace std;
 int main (int argc, char *argv[]) {
 	int limite;
 
-   std::cout << "Abzundant number" << std::endl;
+   std::cout << "Frendly numbers" << std::endl;
    std::cout << "Grenze: ";
    std::cin >> limite;
-   print_abundant(limite);
+   print_amicables(limite);
    return 0;
 }

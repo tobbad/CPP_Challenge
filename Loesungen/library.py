@@ -35,3 +35,11 @@ def sum_proper_divisors(num):
     #print("num: %d Sum %d" %(num, res))
     return res
     
+def print_amicables(limit):
+	for  number in range(4, limit):
+		sum1 = sum_proper_divisors(number);
+		if (sum1 < limit):
+			sum2 = sum_proper_divisors(sum1);
+			if ((sum2==number) and (number!=sum1)):
+				print("%d, %d" % (number, sum1))
+

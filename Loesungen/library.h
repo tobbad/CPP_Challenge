@@ -4,4 +4,6 @@ int gcd(int a, int b = 0);
 int lcm(int a, int b);
 bool isPrim(int limite);
 int sum_proper_divisors(int num);
+void print_abundant(int limit);
+void print_amicables(int limit);
 #endif

@@ -55,3 +55,30 @@ int sum_proper_divisors(int num){
 	//std::cout << num << " Sum " << result<< std::endl;
 	return result;
 }
+
+void print_abundant(int limit){
+	for (int number=10;number<=limit;number++)
+	{
+		auto sum = sum_proper_divisors(number);
+		if (sum>number){
+			std::cout <<number << ", Abundance " << sum-number << std::endl;
+		}
+	}
+	return;
+}
+
+void print_amicables(int limit){
+	for (int number=4;number<=limit;number++)
+	{
+		auto sum1 = sum_proper_divisors(number);
+		if (sum1 < limit)
+		{
+			auto sum2 = sum_proper_divisors(sum1);
+			if ((sum2==number) && (number!=sum1))
+			{
+				std::cout << number << "," << sum1 << std::endl;
+			}
+		}
+	}
+	return;
+}

@@ -6,4 +6,6 @@ bool isPrim(int limite);
 int sum_proper_divisors(int num);
 void print_abundant(int limit);
 void print_amicables(int limit);
+void print_narcissistics1(unsigned int imite);
+
 #endif

@@ -82,3 +82,23 @@ void print_amicables(int limit){
 	}
 	return;
 }
+
+void print_narcissistics1(unsigned int imite)
+{
+	for (int i=1;i<=9;i++)
+	{
+		for (int j=1;j<=9;j++)
+		{
+			for (int k=1;k<=9;k++)
+			{
+				auto abc =100*i+10*j+k;
+				auto arm = i*i*i+j*j*j+k*k*k;
+				if (abc==arm)
+				{
+					std::cout << arm << std::endl;
+				}
+			}
+		}
+		//std::cout << i << std::endl;
+	}
+}

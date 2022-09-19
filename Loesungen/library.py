@@ -43,3 +43,11 @@ def print_amicables(limit):
 			if ((sum2==number) and (number!=sum1)):
 				print("%d, %d" % (number, sum1))
 
+def print_armstong():
+    for i in range(1,10):
+        for j in range(1,10):
+            for k in range(1,10):
+                abc=100*i+10*j+k
+                abm=i*i*i+j*j*j+k*k*k
+                if  abc==abm:
+                    print("%d contains the square of %d, %d and %d" %(abm, i, j, k))

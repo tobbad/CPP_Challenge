@@ -7,7 +7,7 @@ fn main(){
 		let mut summe:u32=0;
 		if (i%3)==0 && (i%5)==0
 		{
-			let summe= summe+i;
+			let mut summe= summe+i;
 			println!("Summ up {} to {}", i, summe);
 		}
 		

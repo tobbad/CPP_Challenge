@@ -1,13 +1,14 @@
 
-use std::io;
+use std::io::*;
+use loesung_01::get_int_fromcl;
+
 fn main(){
-	let limite=100;
-	let summe:u64=0;
-	for i in 0 .. limite	{
-		let mut summe:u32=0;
-		if (i%3)==0 && (i%5)==0
+	let mut summe:u64=0;
+	let limite = get_int_fromcl(&String::from("Upper limit? "));
+	for i in 0 .. limite+1	{
+		if (i%3)==0 || (i%5)==0
 		{
-			let mut summe= summe+i;
+			summe += i;
 			println!("Summ up {} to {}", i, summe);
 		}
 		

@@ -11,13 +11,13 @@ int main (int argc, char *argv[]) {
 		std::cout << "Limite " ;
 		std::cin >> limite;
 		std::cout << "Summiere bis " << limite << endl;
-		for (int i=0;i<limite+1;i++)
+		for (int i=0;i<=limite+1;i++)
 		{
 		if ((i%3)==0 || (i%5)==0)
 		{
 			summe+=i;
+		    std::cout << i << " "<< summe<< std::endl;
 		}
-		//std::cout << i << " "<< summe<< std::endl;
 
 	}
 	std::cout << "Result is " << summe;

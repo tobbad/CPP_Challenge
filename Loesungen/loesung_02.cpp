@@ -16,7 +16,6 @@ int main (int argc, char *argv[]) {
    std::cin >> b;
    std::cout << "Result is: " << res << std::endl;
    res = gcd(a, b);
-   res = 42;
    std::cout << "Result is: " << res << std::endl;
   return 0;
 }

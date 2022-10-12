@@ -1,11 +1,8 @@
+#!/usr/nin/python
 from library import *
 
 
 if __name__ == "__main__":
-    number_1=input("Zahl 1? ")
-    number_1=int(number_1)
-    number_2=input("Zahl 2? ")
-    number_2=int(number_2)
-
-    res = lcm(number_1, number_2)
-    print("Result is %d" % res) 
+    opt, args = getOpt()
+    res = lcm(int(args[0]), int(args[1]))
+    print("%d" % res)

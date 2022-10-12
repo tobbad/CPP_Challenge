@@ -2,7 +2,6 @@ from library import *
 
 
 if __name__ == "__main__":
-    print("$freundliche Zahlen")
-    limit=input("Obere Grenze? ")
-    limit=int(float(limit))cd ..
-    print_amicables(limit)
+    opt, args = getOpt()
+    limite=int(float(args[0]))
+    print_amicables(limite)

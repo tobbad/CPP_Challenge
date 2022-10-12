@@ -1,12 +1,8 @@
-
+#!/usr/bin/python
 from library import *
 
 
 if __name__ == "__main__":
-    number_1=input("Zahl a? ")
-    number_1=int(number_1)
-    number_2=input("Zahl b? ")
-    number_2=int(number_2)
-
-    res = gcd(number_1, number_2)
-    print("Result is %d" % res) 
+    opt, args = getOpt()
+    res = gcd(int(args[0]), int(args[1]))
+    print("%d" % res)

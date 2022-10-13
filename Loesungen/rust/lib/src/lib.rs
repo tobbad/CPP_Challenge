@@ -27,7 +27,9 @@ pub fn gcd(a:u64, b:u64) -> u64
 pub fn lcm(a:u64, b:u64) -> u64
 {
 	let h = gcd(a, b);
-	if h==0
+	println!( "bbb {}", h);
+
+	if h != 0
 	{
 		a*(b/h)
 	} else  {

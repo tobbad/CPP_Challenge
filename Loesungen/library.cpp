@@ -27,11 +27,14 @@ int  lcm(int a, int b)
 
 bool isPrim(int limite)
 {
-	if ((limite==1) || (limite==2))
+	if (limite<=3)
 		return (limite>1);
+	else if ((limite%2==0)||(limite%3==0)){
+		return false;
+	}
 	else
 	{
-		int upLim=floor(sqrt(limite));
+		int upLim=floor(sqrt(limite))+1;
 		for (int i=2;i<upLim;i++)
 		{
 			if (limite%i==0)
@@ -39,9 +42,8 @@ bool isPrim(int limite)
 				return false;
 			}		
 		}
-		return true;
 	}
-	return false;
+	return true;
 }
 
 int sum_proper_divisors(int num){

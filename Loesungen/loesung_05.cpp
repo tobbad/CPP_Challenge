@@ -12,10 +12,10 @@ int main (int argc, char *argv[]) {
    std::cout << "Sexy Primzahlen mit 6 dazwischen" << std::endl;
    std::cout << "Grenze: ";
    std::cin >> limite;
-   for (int i=0;i<limite;i++)
+   for (int i=1;i<limite;i++)
    {
 	   if (isPrim(i) && isPrim(i+6)) {
-	       std::cout << "Result is: " << i <<  " & " << i+6 <<std::endl;
+	       std::cout << i <<  " ; " << i+6 <<std::endl;
 	   }
    }
   return 0;

@@ -12,7 +12,7 @@ int main (int argc, char *argv[]) {
    std::cout << "Primzahlen bis zu einer Grenze" << std::endl;
    std::cout << "Grenze: ";
    std::cin >> limite;
-   for (int i=0;i<limite;i++)
+   for (int i=2;i<limite;i++)
    {
 	   if (isPrim(i)) {
 	       std::cout << "Primzahl: " << i  <<std::endl;

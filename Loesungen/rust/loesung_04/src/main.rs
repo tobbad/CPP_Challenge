@@ -8,7 +8,7 @@ fn main(){
 		if is_prim(i)
 		{
 			println!("Largest prime {}",i);
-			exit(0);
+			//exit(0);
 		}
 		
 	}

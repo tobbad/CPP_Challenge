@@ -71,23 +71,22 @@ pub fn sum_proper_divisors(num:u64) -> u64
 {
 	let mut result =1;
 	let mut i=2;
-	let uplim = (num as f64).sqrt() as u64;
+	let uplim = (num as f64).sqrt() as u64+1;
 
 	for i in 2..uplim
 	{
-		if num%i==0
+		if num%i == 0
 		{
-			if i==num%i
+			if i==num/i
 			{
-				result+=i;
+				result+= i;
 			}
 			else
 			{
-				result+=i+num/i;
+				result += i+num/i;
 			}
 		}
 	}
-	//println!("Sum proper divisors{} ", result);
 	result
 }
 

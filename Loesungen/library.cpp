@@ -1,5 +1,6 @@
 #include <iostream>
 #include <math.h>
+#include  <vector>
 #include "library.h"
 using namespace std;
 
@@ -103,4 +104,35 @@ void print_narcissistics1(void)
 		}
 		//std::cout << i << std::endl;
 	}
+}
+
+std::vector<unsigned long long> prime_factors(unsigned long long number)
+{
+	std::vector<unsigned long long> factors;
+	while (number%2==0) {
+		factors.push_back(2);
+		number /= 2;
+	}
+		
+	for (unsigned long long i=3;i<=std::sqrt(number); i++)
+	{
+		while (number%i==0){
+			factors.push_back(i);
+			number /= i;
+		}
+	}
+	if (number>2){
+		factors.push_back(number);
+	}
+
+	return factors;
+}
+
+void print_vector(std::vector<unsigned long long int> vector)
+{
+	std::cout << "[ ";
+	for (auto i:vector){
+		std::cout << i << ", ";
+	}
+	std::cout << "]" << std::endl;
 }

@@ -133,7 +133,7 @@ pub fn  print_narcissistics1() -> ()
 			{
 				let abc =100*i+10*j+k;
 				let arm = i*i*i+j*j*j+k*k*k;
-				if (abc==arm)
+				if abc==arm
 				{
 					println!("{}", arm);
 				}
@@ -142,3 +142,31 @@ pub fn  print_narcissistics1() -> ()
 		//std::cout << i << std::endl;
 	}
 }
+pub fn prime_factors(mut number :u64) -> Vec<u64> 
+{
+	let mut factors: Vec<u64> =  Vec::new();
+	let uplim = (number as f64).sqrt() as u64+1;
+	while number%2==0 
+	{
+		factors.push(2);
+		number /= 2;
+	}
+			
+	for i in 3..uplim
+	{
+		while number%i==0
+		{
+			factors.push(i);
+			number /= i;
+		}
+	}
+	if number>2
+	{
+		factors.push(number);
+	}
+
+	return factors
+	
+	
+	
+} 

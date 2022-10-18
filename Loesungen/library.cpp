@@ -85,7 +85,7 @@ void print_amicables(int limit){
 	return;
 }
 
-void print_narcissistics1(unsigned int imite)
+void print_narcissistics1(void)
 {
 	for (int i=1;i<=9;i++)
 	{

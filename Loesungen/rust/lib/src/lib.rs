@@ -121,3 +121,24 @@ pub fn print_amicables(limit:u64) -> u64{
 	}
 	number
 }
+
+
+pub fn  print_narcissistics1() -> ()
+{
+	for  i in 1..9
+	{
+		for j in 1..9
+		{
+			for k in 1..9
+			{
+				let abc =100*i+10*j+k;
+				let arm = i*i*i+j*j*j+k*k*k;
+				if (abc==arm)
+				{
+					println!("{}", arm);
+				}
+			}
+		}
+		//std::cout << i << std::endl;
+	}
+}

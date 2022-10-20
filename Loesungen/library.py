@@ -60,3 +60,42 @@ def getOpt():
     opt, args = p.parse_args()
     return opt, args
 
+def prime_factors(number):
+    factors=[]
+    while (number%2==0):
+        factors.append(2)
+        number/=2
+    uplim=int(ceil(sqrt(number)))+1
+    for i in range(3,uplim,2):
+        while (number%i==0):
+            factors.append(i)
+            number=number/i
+    if number>2:
+        factors.append(number)
+    return factors
+        
+
+def gray_encode(number):
+    return number^(number>>1)
+
+
+def gray_decode(gray):
+    for  bitPos in range(31,2):
+        bitMask = 1<<bitPos
+        if gray&bitMask:
+            gray ^= bitMask >>1
+    return gray
+
+def to_binary(number, digits=5):
+    mask= (1<<digits)-1
+    number &= mask
+    string=""
+    for i in range(digits):
+        if number&(1<<i)==0:
+            string = "0"+string
+        else:
+            string = "1"+string
+    return string
+            
+        
+    

@@ -10,4 +10,7 @@ void print_amicables(int limit);
 void print_narcissistics1(void);
 std::vector<unsigned long long> prime_factors(unsigned long long limite);
 void print_vector(std::vector<unsigned long long int>);
+unsigned int gray_encode(unsigned int const num);
+unsigned int gray_decode(unsigned int gray);
+std::string to_binary(unsigned int value, unsigned int digits=5);
 #endif

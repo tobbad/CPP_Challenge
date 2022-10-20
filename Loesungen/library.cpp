@@ -1,6 +1,7 @@
 #include <iostream>
 #include <math.h>
 #include  <vector>
+#include <bitset>
 #include "library.h"
 using namespace std;
 
@@ -135,4 +136,23 @@ void print_vector(std::vector<unsigned long long int> vector)
 		std::cout << i << ", ";
 	}
 	std::cout << "]" << std::endl;
+}
+
+unsigned int gray_encode(unsigned int const num)
+{
+	return num ^ (num>>1);
+}
+
+unsigned int gray_decode(unsigned int gray)
+{
+	for (unsigned int bit=1;bit>1;bit>>=1)
+	{
+		if (gray & bit) gray ^= bit>>1;
+	}
+	return gray;
+}
+
+std::string to_binary(unsigned int value, unsigned int digits)
+{
+	return std::bitset<32>(value).to_string().substr(32- digits, digits);
 }

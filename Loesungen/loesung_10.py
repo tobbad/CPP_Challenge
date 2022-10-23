@@ -10,5 +10,5 @@ if __name__ == "__main__":
         nStrToAsci = "%02d" % n
         encgToAsci = "%04d" % encg
         decgStrToAsci = ("%04d" % decg)
-        res=("%02d "%n + nStr+" "+to_binary(n)+" "+to_binary(encg)+" "+encgToAsci+ " "+ decgStrToAsci)
+        res=("%02d "%n + to_binary(n)+" "+to_binary(encg)+" "+encgToAsci+ " "+ decgStrToAsci)
         print(res)        

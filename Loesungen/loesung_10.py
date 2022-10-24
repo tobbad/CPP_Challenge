@@ -9,6 +9,6 @@ if __name__ == "__main__":
         nStr = to_binary(n)
         nStrToAsci = "%02d" % n
         encgToAsci = "%04d" % encg
-        decgStrToAsci = ("%04d" % decg)
+        decgStrToAsci = ("%2d" % decg)
         res=("%02d "%n + to_binary(n)+" "+to_binary(encg)+" "+encgToAsci+ " "+ decgStrToAsci)
         print(res)        

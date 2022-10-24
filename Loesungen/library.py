@@ -80,7 +80,7 @@ def gray_encode(number):
 
 
 def gray_decode(gray):
-    for  bitPos in range(31,2):
+    for  bitPos in range(31,1,-1):
         bitMask = 1<<bitPos
         if gray&bitMask:
             gray ^= bitMask >>1

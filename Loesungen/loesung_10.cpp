@@ -11,7 +11,7 @@ using namespace std;
 int main (int argc, char *argv[]) {
 	std::cout << "Number\tBinary\tGray\tDecoded" << std::endl;
 	std::cout << "------\t------\t----\t-------" << std::endl;
-	for (unsigned int i=0;i<32;i++)
+	for (unsigned int n=0;n<32;++n)
 	{
 		auto encg = gray_encode(i);
 		auto decg = gray_decode(encg);

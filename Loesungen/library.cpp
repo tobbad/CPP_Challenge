@@ -145,7 +145,7 @@ unsigned int gray_encode(unsigned int const num)
 
 unsigned int gray_decode(unsigned int gray)
 {
-	for (unsigned int bit=1;bit>1;bit>>=1)
+	for (unsigned int bit=1<<31;bit>1;bit>>=1)
 	{
 		if (gray & bit) gray ^= bit>>1;
 	}

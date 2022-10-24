@@ -1,0 +1,1 @@
+/usr/bin/c++  -std=c++1z -fexceptions -g -Wall CMakeFiles/problem_91.dir/main.cpp.o -o ../../bin/problem_91  -lcryptlib 

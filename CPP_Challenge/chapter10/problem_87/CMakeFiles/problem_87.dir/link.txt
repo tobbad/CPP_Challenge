@@ -1,0 +1,1 @@
+/usr/bin/c++  -std=c++1z -fexceptions -g -Wall CMakeFiles/problem_87.dir/__/__/libs/sqlite/sqlite3.c.o CMakeFiles/problem_87.dir/main.cpp.o -o ../../bin/problem_87 

@@ -1,0 +1,1 @@
+/usr/bin/c++  -std=c++1z -fexceptions -g -Wall CMakeFiles/problem_80.dir/main.cpp.o -o ../../bin/problem_80  ../../libs/ZipLib/libZipLib.a ../../libs/ZipLib/extlibs/bzip2/libbzip2.a ../../libs/ZipLib/extlibs/lzma/liblzma.a ../../libs/ZipLib/extlibs/zlib/libzlib.a 

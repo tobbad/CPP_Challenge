@@ -173,7 +173,7 @@ pub fn gray_encode(number:u8) -> u8 {
 }
 
 pub fn gray_decode(mut gray:u8)  -> u8{
-	for bit in (2..8).rev()
+	for bit in (2..7).rev()
 	{
 		let bitmask = 1<<bit;
 		if (gray &bitmask)==bitmask
@@ -199,12 +199,12 @@ pub fn to_binary(num:u8) -> String
 	ret
 }
 
-pub fn print_header(nr:u8) -> String
+pub fn print_header(nr:u8) -> ()
 {
 	match nr
 	{
-		0 => String::from("Number\tBinary\tGray\tDecoded"),
-		1 => String::from("------\t------\t----\t-------"),
-		_ => String::from(""),
+		0 => println!("Number\tBinary\tGray\tDecoded"),
+		1 => println!("------\t------\t----\t-------"),
+		_ => println!(""),
 	}
 }

@@ -70,7 +70,7 @@ pub fn is_prim(num:u64) -> bool
 pub fn sum_proper_divisors(num:u64) -> u64
 {
 	let mut result =1;
-	let mut i=2;
+	//let i=2;
 	let uplim = (num as f64).sqrt() as u64+1;
 
 	for i in 2..uplim
@@ -166,7 +166,45 @@ pub fn prime_factors(mut number :u64) -> Vec<u64>
 	}
 
 	return factors
-	
-	
-	
-} 
+}
+
+pub fn gray_encode(number:u8) -> u8 {
+	number ^ (number>>1)
+}
+
+pub fn gray_decode(mut gray:u8)  -> u8{
+	for bit in (2..8).rev()
+	{
+		let bitmask = 1<<bit;
+		if (gray &bitmask)==bitmask
+		{
+			gray ^= bitmask>>1;
+		}
+	}
+	gray
+}
+
+pub fn to_binary(num:u8) -> String
+{
+	let mut ret = String::new();
+	for n in (0..8).rev()
+	{
+		if num&(1<<n)==1<<n
+		{
+			ret += "1";
+		} else {
+			ret += "0";
+ 		}
+	}
+	ret
+}
+
+pub fn print_header(nr:u8) -> String
+{
+	match nr
+	{
+		0 => String::from("Number\tBinary\tGray\tDecoded"),
+		1 => String::from("------\t------\t----\t-------"),
+		_ => String::from(""),
+	}
+}

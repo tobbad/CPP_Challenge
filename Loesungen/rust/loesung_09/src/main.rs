@@ -1,4 +1,4 @@
-use std::io::*;
+//use std::io::*;
 use std::process::*;
 use loesung_09::{get_int_fromcl, prime_factors};
 

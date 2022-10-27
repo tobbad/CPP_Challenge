@@ -13,6 +13,6 @@ int main (int argc, char *argv[]) {
     std::cout << "Zahl: ";
     std::cin >> number;
 	auto res = to_roman(number);
-	printf("%s", res);	
+	std:: cout <<  res << std::endl;	
     return 0;
 }

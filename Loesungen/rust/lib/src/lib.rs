@@ -199,7 +199,7 @@ pub fn to_binary(num:u8) -> String
 	ret
 }
 
-pub fn print_header(mut n:u8) -> ()
+pub fn print_header(n:u8) -> ()
 {
 	match n
 	{
@@ -210,32 +210,33 @@ pub fn print_header(mut n:u8) -> ()
 	
 }
 
-pub	stuct s_table    {
+#[derive(Debug)]
+struct STable {
 	value: u64,
-	string: &str,
+	string: String,
 }
+
 
 pub fn to_roman(mut number:u64) -> String
 {
-	table = vec![
-		s_table( 1000, Sting::from("M" )),s_table( 900, Sting::from("CM" )),
-		s_table( 500, Sting::from("D" )) ,s_table( 400, Sting::from("CD" )),
-		s_table( 100, Sting::from("C" )) ,s_table( 90, Sting::from("XC" )),
-		s_table( 50, Sting::from("L" ))  ,s_table( 40, Sting::from("XL" )),
-		s_table( 10, Sting::from("X" ))  ,s_table( 9, Sting::from("IX" )),
-		s_table( 5, Sting::from("V" ))   ,s_table(4, Sting::from("IV" )),
-		s_table( 1, Sting::from("I"))
+	let table = vec![
+		STable{ value:1000, string:String::from("M" )},STable{ value:900, string:String::from("CM" )},
+		STable{ value:500, string:String::from("D" )} ,STable{ value:400, string:String::from("CD" )},
+		STable{ value:100, string:String::from("C" )} ,STable{ value:90, string:String::from("XC" )},
+		STable{ value:50,string:String::from("L" )}  ,STable{ value:40, string:String::from("XL" )},
+		STable{ value:10, string:String::from("X" )}  ,STable{ value:9, string:String::from("IX" )},
+		STable{ value:5, string:String::from("V" )}   ,STable{value:4, string:String::from("IV" )},
+		STable{ value:1, string:String::from("I")}
 	];
 	let mut res = String::new();
 	for item in &table
 	{
-		println!("{}", item);
-		//
-		//while number > val
-		//{
-		//	number -= val;
-		//	res += s;
-		//}
+		
+		while number >= item.value
+		{
+			number -= item.value;
+			res += &item.string;
+		}
 		
 	}
 	res

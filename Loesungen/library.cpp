@@ -178,9 +178,7 @@ std::string to_roman(unsigned int number)
          result += kvp.second;
          number -= kvp.first;
       }
-	  printf("%s \n", result);
    }
-   printf("Result %s\n", result);
 
    return result;
 }

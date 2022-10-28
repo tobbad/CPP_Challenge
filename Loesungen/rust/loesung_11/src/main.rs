@@ -1,10 +1,14 @@
 //extern crate getopts;
 //use getopts::Options;
-//use std::env;
-use loesung_11::{to_roman, get_int_fromcl};
+use std::env;
+use loesung_11::{to_roman, get_u64_parameter};
 
 fn main(){
-	let number = get_int_fromcl("Number?");
-	let n_Str = to_roman(number);
-	println!("{}", n_Str);
+    let arg1 = env::args().nth(1);
+	let number = get_u64_parameter(arg1.unwrap());
+	println!("{}", number);
+	let n_str = to_roman(number);
+	println!("{}", n_str);
+
 }
+

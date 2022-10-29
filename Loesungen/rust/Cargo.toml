@@ -1,0 +1,16 @@
+[workspace]
+
+members = [
+    "lib",
+    "loesung_01",
+    "loesung_02",
+    "loesung_03",
+    "loesung_04",
+    "loesung_05",
+    "loesung_06",
+    "loesung_07",
+    "loesung_08",
+    "loesung_09",
+    "loesung_10",
+    "loesung_11"
+]

@@ -1,6 +1,6 @@
 //use std::io::*;
 //use std::process::*;
-use loesung_10::{gray_encode, gray_decode,print_header,to_binary};
+use lib::{gray_encode, gray_decode,print_header,to_binary};
 
 fn main(){
 	print_header(0);

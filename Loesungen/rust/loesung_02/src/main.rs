@@ -1,5 +1,5 @@
 use std::io::*;
-use loesung_02::{get_int_fromcl, gcd};
+use lib::{get_int_fromcl, gcd};
 
 fn main(){
 	let a = get_int_fromcl(&String::from("a? "));

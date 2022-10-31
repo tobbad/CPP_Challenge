@@ -1,6 +1,5 @@
 use std::io::stdin;
 use std::str;
-use std::env;
 
 pub fn get_int_fromcl(question:&str)->u64
 {
@@ -132,7 +131,7 @@ pub fn print_amicables(limit:u64) -> u64{
 }
 
 
-pub fn  print_narcissistics1() -> ()
+pub fn  print_narcissistics() -> ()
 {
 	for  i in 1..9
 	{
@@ -249,4 +248,9 @@ pub fn to_roman(mut number:u64) -> String
 		
 	}
 	res
+}
+
+pub fn longest_collatz(limit:u64) -> (u64, u64)
+{
+    (limit,0)
 }

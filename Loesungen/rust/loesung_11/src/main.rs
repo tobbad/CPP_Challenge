@@ -1,7 +1,7 @@
 //extern crate getopts;
 //use getopts::Options;
 use std::env;
-use loesung_11::{to_roman, get_u64_parameter};
+use lib::{to_roman, get_u64_parameter};
 
 fn main(){
     let arg1 = env::args().nth(1);

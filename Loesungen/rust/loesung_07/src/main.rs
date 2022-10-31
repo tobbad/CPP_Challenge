@@ -1,6 +1,5 @@
 use std::io::*;
-use std::process::*;
-use loesung_07::{get_int_fromcl, print_amicables};
+use lib::{print_amicables,get_int_fromcl};
 
 fn main(){
 	let limit = get_int_fromcl(&String::from("Upper limit? "));

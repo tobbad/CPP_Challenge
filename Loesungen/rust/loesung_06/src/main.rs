@@ -1,6 +1,6 @@
 use std::io::*;
 use std::process::*;
-use loesung_06::{get_int_fromcl, sum_proper_divisors};
+use lib::{get_int_fromcl, sum_proper_divisors};
 
 fn main(){
 	println!("Abundant numbers");

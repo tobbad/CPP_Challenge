@@ -1,6 +1,5 @@
 
-use std::io::*;
-use loesung_01::get_int_fromcl;
+use lib::get_int_fromcl;
 
 fn main(){
 	let mut summe:u64=0;

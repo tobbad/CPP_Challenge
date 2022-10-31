@@ -12,7 +12,7 @@ int main (int argc, char *argv[]) {
 	int number;
     std::cout << "Zahl: ";
     std::cin >> number;
-	auto res = to_roman(number);
-	std:: cout <<  res << std::endl;	
+	auto res = longest_collatz(number);
+	std:: cout <<  res.first << " " << res.second << std::endl;	
     return 0;
 }

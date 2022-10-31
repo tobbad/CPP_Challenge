@@ -14,5 +14,7 @@ unsigned int gray_encode(unsigned int const num);
 unsigned int gray_decode(unsigned int gray);
 std::string to_binary(unsigned int value, unsigned int digits=5);
 std::string to_roman(unsigned int number);
+std::pair<unsigned long long, long> longest_collatz(unsigned long long limit);
+
 
 #endif

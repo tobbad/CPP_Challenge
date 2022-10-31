@@ -1,7 +1,7 @@
 from library import *
 
 def loesung(number):
-    print(to_roman(number))
+    print(longest_collatz(number))
 
 if __name__ == "__main__":
     opt, arg = getOpt()

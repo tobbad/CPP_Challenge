@@ -122,4 +122,21 @@ def to_roman(number):
                 res += t[1]
         return res
         
-    
+def longest_collatz(limite):
+    cache = [0]*(limite+1)
+    length = 0
+    for i in range(2, limite+1):
+        n = i
+        steps = 0
+        while ((n!=1) and (n>=i)):
+            if (n%2 == 0):
+                n = int(n/2)
+            else:
+                n = int(3*n+1)
+            steps+=1
+        cache[i] = steps + cache[n]
+        if cache[i]>length:
+            length =  cache[i]
+            number = i
+   
+    return number, length

@@ -1,5 +1,8 @@
+
+import numpy as np
 from math import *
 import optparse
+
 
 def gcd(a,b):
     if b==0:
@@ -140,3 +143,8 @@ def longest_collatz(limite):
             number = i
    
     return number, length
+    
+def compute_pi(samples = 1000000):
+    sg = np.random.SeedSequence(1234)
+    gen =  np.random.Generator()
+    

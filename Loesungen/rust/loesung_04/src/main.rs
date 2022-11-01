@@ -1,5 +1,3 @@
-use std::io::*;
-use std::process::*;
 use lib::{get_int_fromcl, is_prim};
 
 fn main(){

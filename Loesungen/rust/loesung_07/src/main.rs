@@ -1,4 +1,3 @@
-use std::io::*;
 use lib::{print_amicables,get_int_fromcl};
 
 fn main(){

@@ -1,4 +1,3 @@
-use std::io::*;
 use lib::{get_int_fromcl, is_prim};
 
 fn main(){

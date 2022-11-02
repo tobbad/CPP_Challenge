@@ -1,5 +1,7 @@
 use std::io::stdin;
 use std::str;
+use rand;
+use rand::Rng;
 
 pub fn get_int_fromcl(question:&str)->u64
 {
@@ -304,4 +306,22 @@ pub fn longest_collatz(limit:usize) -> (usize, usize)
         
     }
     (number,length)
+}
+
+pub fn compute_pi(samples:u32) -> f64
+{
+    let mut rng = rand::thread_rng();
+    let mut hit = 0;
+    for _i in 0..samples
+    {
+        let x = rng.gen::<f64>();
+        let y = rng.gen::<f64>();
+        if (1 as f64) > x*x + y*y
+        {
+            hit = hit+1; 
+        }
+        
+    }
+    4.0* hit as f64 /samples as f64
+
 }

@@ -1,6 +1,7 @@
 
 import numpy as np
 from math import *
+import random
 import optparse
 
 
@@ -145,6 +146,10 @@ def longest_collatz(limite):
     return number, length
     
 def compute_pi(samples = 1000000):
-    sg = np.random.SeedSequence(1234)
-    gen =  np.random.Generator()
-    
+    hit = 0
+    for i in range(samples):
+        x = random.random()
+        y = random.random()
+        if y<sqrt(1-x**2):
+            hit += 1
+    return 4.0*hit/samples

@@ -7,7 +7,7 @@ using namespace std;
 
 
 int main (int argc, char *argv[]) {
-	int limite, res=0;
+	int limite=0;
 
    std::cout << "Grösste Primzahl unter gegebener Grenze" << std::endl;
    std::cout << "Grenze: ";

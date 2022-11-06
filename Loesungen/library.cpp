@@ -10,7 +10,7 @@
 
 
 
-int gcd(int a, int b) 
+int gcd(int a, int b)
 {
     std::cout << "a: " << a << " b: " << b << std::endl;
     if (b == 0) {
@@ -45,7 +45,7 @@ bool isPrim(int limite)
             if (limite%i==0)
             {
                 return false;
-            }       
+            }
         }
     }
     return true;
@@ -90,7 +90,7 @@ void print_amicables(int limit){
     return;
 }
 
-void print_narcissistics1(void)
+void print_narcissistics(void)
 {
     for (int i=1;i<=9;i++)
     {
@@ -117,7 +117,7 @@ std::vector<unsigned long long> prime_factors(unsigned long long number)
         factors.push_back(2);
         number /= 2;
     }
-        
+
     for (unsigned long long i=3;i<=std::sqrt(number); i++)
     {
         while (number%i==0){
@@ -172,7 +172,7 @@ std::string to_roman(unsigned int number)
         { 5, "V" },{ 4, "IV" },
         { 1, "I" }
     };
-    printf("Enter\n");  
+    printf("Enter\n");
    std::string result;
    for (auto const & kvp : roman)
    {
@@ -204,7 +204,7 @@ std::pair<unsigned long long, long> longest_collatz(unsigned long long limit)
             steps++;
         }
         cache[i] = steps + cache[n];
-        
+
         if (cache[i] > length)
         {
             length = cache[i];
@@ -214,17 +214,4 @@ std::pair<unsigned long long, long> longest_collatz(unsigned long long limit)
     return std::make_pair(number, length);
 }
 
-template <
-   typename E = std::mt19937, 
-   typename D = std::uniform_real_distribution<>>
-double compute_pi(E& engine, D&dist, int samples)
-{
-    auto hit = 0;
-    for (auto i=0;i<samples;i++)
-    {
-        auto x = dist(engine);
-        auto y = dist(engine);
-        if (y < std::sqrt(1-std::pow(x,2))) hit +=1;
-    }
-    return 4.0* hit /samples;
-}
+

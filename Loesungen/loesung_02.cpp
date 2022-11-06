@@ -6,7 +6,6 @@
 using namespace std;
 
 int main (int argc, char *argv[]) {
-	long long int summe=0;
 	int a,b, res=0;
 
    std::cout << "Keinster gemeinsamer Teiler\n" << std::endl;

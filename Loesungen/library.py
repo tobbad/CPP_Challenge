@@ -153,3 +153,20 @@ def compute_pi(samples = 1000000):
         if y<sqrt(1-x**2):
             hit += 1
     return 4.0*hit/samples
+
+def validate_isbn_10(isbn):
+    print(type(isbn), isbn)
+    if not type(isbn)==str:
+        print("Wrong datatype")
+        return False
+    if len(isbn) != 10:
+        print("Wrong size")
+        return False
+    if not isbn.isdigit():
+        print("Is not number")
+        return False
+    sum = 0
+    for (w,d) in zip(range(10,0,-1), isbn):
+        sum += w*(ord(d)-ord('0'))
+        print(w,ord(d)-ord('0'), sum%11)
+    return (sum%11==0)

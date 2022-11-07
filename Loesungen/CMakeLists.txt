@@ -36,6 +36,7 @@ add_executable(loesung_10 loesung_10.cpp library.cpp library.h)
 add_executable(loesung_11 loesung_11.cpp library.cpp library.h getopt.h)
 add_executable(loesung_12 loesung_12.cpp library.cpp library.h getopt.h)
 add_executable(loesung_13 loesung_13.cpp library.cpp library.h getopt.h)
+add_executable(loesung_14 loesung_14.cpp library.cpp library.h getopt.h)
 add_executable(prime prime.cpp library.cpp library.h)
 target_include_directories(loesung_01 PUBLIC ${POJRCT_BINARY_DIR})
 #target_include_directories(CPP_Challenge PUBLIC

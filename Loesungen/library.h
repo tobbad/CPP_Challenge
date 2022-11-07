@@ -33,5 +33,6 @@ template <  typename E = std::mt19937, typename D = std::uniform_real_distributi
     return 4.0* hit /samples;
 }
 
+bool validate_isbn_10(std::string_view isbn); 
 
 #endif

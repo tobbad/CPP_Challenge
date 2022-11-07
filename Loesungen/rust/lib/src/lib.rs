@@ -32,6 +32,12 @@ pub fn get_u64_parameter(parameter:String)->u64
 	res
 }
 
+pub fn get_sting_parameter(parameter:String)->String
+{
+	parameter.trim().parse::<&str>
+}
+
+
 pub fn get_usize_parameter(parameter:String)->usize
 {
 
@@ -324,4 +330,9 @@ pub fn compute_pi(samples:u32) -> f64
     }
     4.0* hit as f64 /samples as f64
 
+}
+
+pub fn validate_isbn_10(isbn:String) -> bool
+{
+    true
 }

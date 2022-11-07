@@ -4,6 +4,8 @@
 #include <random>
 #include <algorithm>
 #include <array>
+#include <cassert>
+#include <string>
 #include "library.h"
 
 
@@ -14,8 +16,8 @@ using namespace std;
 int main (int argc, char *argv[]) {
 	std::string isbn;
 
-    std::cout << "Grösste Primzahl unter gegebener Grenze" << std::endl;
-    std::cout << "Grenze: ";
+    std::cout << "ISBN nummer check" << std::endl;
+    std::cout << "ISBN Nummer: ";
     std::cin >> isbn;
     
     validate_isbn_10(isbn);

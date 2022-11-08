@@ -1,12 +1,17 @@
 use std::env;
-use lib::{compute_pi,validate_isbn_10, get_sting_parameter};
+use lib::{validate_isbn_10,get_input};
 
 fn main(){
-    let arg1 = env::args().nth(1);
-    isbn = get_sting_parameter(arg1);
+    let isbn = get_input("ISBN: ");
+
 	println!("{}", isbn);
-    let a = validate_isbn_10(arg1);
-    println!("{:?}", a);
+    let a = validate_isbn_10(isbn);
+    println!("Given ISBN: {:?}", a);
+    let a = validate_isbn_10(String::from("0306406152"));
+    println!("Good ISBN: {:?}", a);
+    let a = validate_isbn_10(String::from("0306406151"));
+    println!("Bad  ISBN: {:?}", a);
+
 
 }
 

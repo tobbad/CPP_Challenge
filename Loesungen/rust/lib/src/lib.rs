@@ -1,4 +1,5 @@
 use std::io::stdin;
+use std::io;
 use std::str;
 use rand;
 use rand::Rng;
@@ -32,11 +33,15 @@ pub fn get_u64_parameter(parameter:String)->u64
 	res
 }
 
-pub fn get_sting_parameter(parameter:String)->String
-{
-	parameter.trim().parse::<&str>
+pub fn get_input(prompt: &str) -> String{
+    println!("{}",prompt);
+    let mut input = String::new();
+    match io::stdin().read_line(&mut input) {
+        Ok(_goes_into_input_above) => {},
+        Err(_no_updates_is_fine) => {},
+    }
+    input.trim().to_string()
 }
-
 
 pub fn get_usize_parameter(parameter:String)->usize
 {
@@ -334,5 +339,27 @@ pub fn compute_pi(samples:u32) -> f64
 
 pub fn validate_isbn_10(isbn:String) -> bool
 {
-    true
+    let mut sum =0;
+    if isbn.chars().count() == 10
+    {
+        let mut w = 10;
+        for c in  isbn.chars()
+        {
+            if ! c.is_ascii_digit()
+            {
+                println!("{} is not numeric", c);
+                return false
+            }
+            //println!("Check {}", c.to_digit(10).unwrap());
+            sum = sum+w*(c.to_digit(10).unwrap());
+            w = w-1; 
+        }
+    } 
+//    else 
+//    {
+//        println!("Not correct length");
+//    }
+    
+    (sum%11)==0
+    
 }

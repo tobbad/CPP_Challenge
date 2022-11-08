@@ -234,20 +234,26 @@ std::pair<unsigned long long, long> longest_collatz(unsigned long long limit)
 }
 */
 
-bool validate_isbn_10(std::string_view isbn)
+bool validate_isbn_10(std::string isbn)
 {
    auto valid = false;
-
-   if (isbn.length() != 10)
+   if (isbn.length() == 10)
    {
+       int w=10;
        int sum = 0;
-       for (int w=10;w>1;w--)
-       {
-           char d = isbn[isbn.length()-w-1];
-           if (false == isdigit(d)) return false;
-           sum += w*(d-'0');
+       for (auto d = isbn.cbegin(); d != isbn.cend();d++)
+       {           
+           //std::cout << "Check " <<  *d << std::endl;
+           if (false == isdigit(*d)) {
+               printf("No digit %c",*d);
+               return false;
+           }
+           sum += w*(*d-'0');
+           w--;
        }
-       valid = !(sum%11);
+       valid = (sum%11)==0;
+    } else {
+        printf("Length not correct\n");
     }
 
    return valid;

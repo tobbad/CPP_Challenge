@@ -155,7 +155,7 @@ def compute_pi(samples = 1000000):
     return 4.0*hit/samples
 
 def validate_isbn_10(isbn):
-    print(type(isbn), isbn)
+    #print(type(isbn), isbn)
     if not type(isbn)==str:
         print("Wrong datatype")
         return False
@@ -168,5 +168,5 @@ def validate_isbn_10(isbn):
     sum = 0
     for (w,d) in zip(range(10,0,-1), isbn):
         sum += w*(ord(d)-ord('0'))
-        print(w,ord(d)-ord('0'), sum%11)
+        #print(w,ord(d)-ord('0'), sum%11)
     return (sum%11==0)

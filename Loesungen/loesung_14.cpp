@@ -20,8 +20,8 @@ int main (int argc, char *argv[]) {
     std::cout << "ISBN Nummer: ";
     std::cin >> isbn;
     
-    validate_isbn_10(isbn);
-    assert(validate_isbn_10("0306406152"));
-    assert(!validate_isbn_10("0306406151"));
+    printf("Given ISBN: %d\n",validate_isbn_10(isbn));
+    printf("Good ISBN: %d\n",validate_isbn_10("0306406152"));
+    printf("Bad  ISBN: %d\n",validate_isbn_10("0306406151"));
 
 }

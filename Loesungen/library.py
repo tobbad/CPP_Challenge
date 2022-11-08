@@ -170,3 +170,29 @@ def validate_isbn_10(isbn):
         sum += w*(ord(d)-ord('0'))
         #print(w,ord(d)-ord('0'), sum%11)
     return (sum%11==0)
+    
+    
+class ipv4:
+    def __init__(self, ip = None):
+        self._ip = [0,0,0,0]
+
+        if ip is None:
+            return 
+        if type(ip) == type([] or type(ip) == type(())) and length(ip)==4:
+            for i in range(4):
+                self._ip[i] = ip[i]
+        print("Created ipv4 class with ")
+        print(self)
+        
+    
+    def __str__(self):
+        res = "%c.%c.%c.%c" %(self._ip[0], self._ip[1], self._ip[2], self._ip[3])
+    
+    def readIp(self):
+        ip = input("IP in dot notation ")
+        if len(ip.split("."))!= 4:
+            print("Dot notation contains 4 values")
+        self.ip = [  int(i) if i<256 else 0 for i in ip.split(".")]
+            
+        
+        

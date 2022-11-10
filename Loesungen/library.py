@@ -175,24 +175,27 @@ def validate_isbn_10(isbn):
 class ipv4:
     def __init__(self, ip = None):
         self._ip = [0,0,0,0]
-
         if ip is None:
             return 
         if type(ip) == type([] or type(ip) == type(())) and length(ip)==4:
             for i in range(4):
-                self._ip[i] = ip[i]
-        print("Created ipv4 class with ")
-        print(self)
+                self._ip[i]= ip[i] 
+        
+    def __eq__(self, other_ip):
+        if type(other_ip) == type(self):
+            self._ip= ipv4(other_ip)
         
     
     def __str__(self):
-        res = "%c.%c.%c.%c" %(self._ip[0], self._ip[1], self._ip[2], self._ip[3])
-    
+        res = "%d.%d.%d.%d" %( self._ip[0], self._ip[1], self._ip[2], self._ip[3] )
+        return res
+       
     def readIp(self):
         ip = input("IP in dot notation ")
-        if len(ip.split("."))!= 4:
+        ip_split = ip.split(".")
+        if len(ip_split) != 4:
             print("Dot notation contains 4 values")
-        self.ip = [  int(i) if i<256 else 0 for i in ip.split(".")]
+        self._ip = [int(int(i)&0xFF) for i in ip_split]
             
         
         

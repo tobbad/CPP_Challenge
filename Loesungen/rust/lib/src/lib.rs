@@ -363,3 +363,14 @@ pub fn validate_isbn_10(isbn:String) -> bool
     (sum%11)==0
     
 }
+
+#[derive(Debug)]
+pub struct IPV4
+{
+    ip : [u8;4] = [0;4];
+}
+
+impl IPV4
+{
+    
+}

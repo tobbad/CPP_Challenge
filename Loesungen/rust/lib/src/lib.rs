@@ -364,13 +364,17 @@ pub fn validate_isbn_10(isbn:String) -> bool
     
 }
 
-#[derive(Debug)]
-pub struct IPV4
-{
-    ip : [u8;4] = [0;4];
-}
-
-impl IPV4
-{
-    
+pub fn string_to_u8_vec(string:String) -> Vec<[&str]>
+{   let ss = string.clone().split(".");
+	//let mut res: Vec<u8> =  Vec::new();
+	let mut res: Vec<[&str]> =  Vec::new();
+    //let mut res = ss.parse::<u8>().unwrap();
+    for i in ss
+    {
+        println!("{}",i.as_bytes());
+        res.push(i);
+    }
+    //println!("{:?}", res);
+    //[1,2,3,4]
+    res
 }

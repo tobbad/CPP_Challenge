@@ -2,6 +2,7 @@
 
 members = [
     "lib",
+    "network",
     "loesung_01",
     "loesung_02",
     "loesung_03",

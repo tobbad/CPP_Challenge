@@ -286,6 +286,22 @@ pub fn to_roman(mut number:u64) -> String
 	}
 	res
 }
+struct Cache<T>
+    where T Fn(u32) -> u32
+    {
+        calculation :T,
+        value Option<u32>
+    }    
+impl<T> Cache<T>
+    where T Fn(u32) -> u32
+{
+    fn new(calculation:T) -> Cacher<T> {
+        calculation,
+        value:None
+    }
+    
+}
+
 
 pub fn longest_collatz(limit:usize) -> (usize, usize)
 {

@@ -364,17 +364,19 @@ pub fn validate_isbn_10(isbn:String) -> bool
     
 }
 
-pub fn string_to_u8_vec(string:String) -> Vec<[&str]>
-{   let ss = string.clone().split(".");
+pub fn string_to_u8_arr(string:String) -> [u8;4]
+{   let ss = string.split(".");
 	//let mut res: Vec<u8> =  Vec::new();
-	let mut res: Vec<[&str]> =  Vec::new();
-    //let mut res = ss.parse::<u8>().unwrap();
+	let mut res: [u8;4]= [0,0,0,0];
+    let mut idx = 0;
+    //let mut resc:[u8;4] = [ 
+    //println!("{:?}", ss);
     for i in ss
     {
-        println!("{}",i.as_bytes());
-        res.push(i);
+        let ipPart = i.parse().unwrap();
+        //println!("{:?}{:?}",i,ipPart); 
+        res[idx] = ipPart;
+        idx = idx+1;
     }
-    //println!("{:?}", res);
-    //[1,2,3,4]
     res
 }

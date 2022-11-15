@@ -366,11 +366,8 @@ pub fn validate_isbn_10(isbn:String) -> bool
 
 pub fn string_to_u8_arr(string:String) -> [u8;4]
 {   let ss = string.split(".");
-	//let mut res: Vec<u8> =  Vec::new();
 	let mut res: [u8;4]= [0,0,0,0];
     let mut idx = 0;
-    //let mut resc:[u8;4] = [ 
-    //println!("{:?}", ss);
     for i in ss
     {
         let ipPart = i.parse().unwrap();

@@ -1,4 +1,3 @@
-use std::fmt;
 use std::fmt::{Display};
 
 #[derive(Debug)]
@@ -7,6 +6,12 @@ pub struct IPV4
     pub ip : [u8;4],
     ip_u32: u32,
 }
+
+enum input {
+    String,
+    [u8;4],
+}
+
 
 pub fn string_ip_v4(string:String) -> [u8;4]
 {   let ss = string.split(".");
@@ -48,7 +53,7 @@ impl Display for IPV4
 {
     fn fmt(&self, f: &mut std::fmt::Formatter,) -> std::fmt::Result
     {
-        write!(f, "IP: {}.{}.{}.{}", self.ip[0], self.ip[1], self.ip[2],self.ip[3])
+        write!(f, "IP: {}.{}.{}.{} of {}", self.ip[0], self.ip[1], self.ip[2],self.ip[3], self.type_of())
     }
  
 }

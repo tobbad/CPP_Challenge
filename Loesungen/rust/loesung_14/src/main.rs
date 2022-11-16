@@ -1,4 +1,3 @@
-use std::env;
 use lib::{validate_isbn_10,get_input};
 
 fn main(){

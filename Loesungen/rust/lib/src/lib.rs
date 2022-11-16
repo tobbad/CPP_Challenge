@@ -254,12 +254,12 @@ pub fn print_header(n:u8) -> ()
 	}
 	
 }
-
 #[derive(Debug)]
 struct STable {
-	value: u64,
-	string: String,
+       value: u64,
+       string: String,
 }
+
 
 
 pub fn to_roman(mut number:u64) -> String
@@ -286,23 +286,8 @@ pub fn to_roman(mut number:u64) -> String
 	}
 	res
 }
-struct Cache<T>
-    where T Fn(u32) -> u32
-    {
-        calculation :T,
-        value Option<u32>
-    }    
-impl<T> Cache<T>
-    where T Fn(u32) -> u32
-{
-    fn new(calculation:T) -> Cacher<T> {
-        calculation,
-        value:None
-    }
-    
-}
-
-
+        
+// Implement cache for following function
 pub fn longest_collatz(limit:usize) -> (usize, usize)
 {
     let mut cache=vec![0; limit+1];
@@ -378,18 +363,4 @@ pub fn validate_isbn_10(isbn:String) -> bool
     
     (sum%11)==0
     
-}
-
-pub fn string_to_u8_arr(string:String) -> [u8;4]
-{   let ss = string.split(".");
-	let mut res: [u8;4]= [0,0,0,0];
-    let mut idx = 0;
-    for i in ss
-    {
-        let ipPart = i.parse().unwrap();
-        //println!("{:?}{:?}",i,ipPart); 
-        res[idx] = ipPart;
-        idx = idx+1;
-    }
-    res
 }

@@ -26,7 +26,6 @@ impl IPV4
     pub fn new(new_ip:[u8;4])->  IPV4 
     {
         let ip_u32_new:u32= u32::from_be_bytes(new_ip);
-        //let ip_u32_new:u32= (new_ip[0]<<24 + new_ip[1]<<16+ new_ip[2]<<8 + new_ip[3]).into();
         IPV4{
             ip: new_ip,
             ip_u32 : ip_u32_new

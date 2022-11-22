@@ -94,5 +94,51 @@ public:
 
       return is;
    }
+   
+   ipv4& operator++()
+   {
+       *this = ipv4(1+ to_ulong());
+       return *this;
+   }   
+   
+   ipv4& operator++(int)
+   {
+      ipv4 result(*this);
+      ++(*this);
+      return *this;
+   }
+
+   friend bool operator==(ipv4 const & a1, ipv4 const & a2) noexcept
+   {
+      return a1.data == a2.data;
+   }
+
+   friend bool operator!=(ipv4 const & a1, ipv4 const & a2) noexcept
+   {
+      return !(a1 == a2);
+   }
+
+   friend bool operator<(ipv4 const & a1, ipv4 const & a2) noexcept
+   {
+      return a1.to_ulong() < a2.to_ulong();
+   }
+
+   friend bool operator>(ipv4 const & a1, ipv4 const & a2) noexcept
+   {
+      return a2 < a1;
+   }
+
+   friend bool operator<=(ipv4 const & a1, ipv4 const & a2) noexcept
+   {
+      return !(a1 > a2);
+   }
+
+   friend bool operator>=(ipv4 const & a1, ipv4 const & a2) noexcept
+   {
+      return !(a1 < a2);
+   }
+   
+   
+   
 };
 #endif

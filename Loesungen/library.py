@@ -3,6 +3,7 @@ import numpy as np
 from math import *
 import random
 import optparse
+import struct
 
 
 def gcd(a,b):
@@ -175,11 +176,13 @@ def validate_isbn_10(isbn):
 class ipv4:
     def __init__(self, ip = None):
         self._ip = [0,0,0,0]
+        self._ipu32 = 0
         if ip is None:
-            return 
+            return None 
         if type(ip) == type([] or type(ip) == type(())) and length(ip)==4:
             for i in range(4):
                 self._ip[i]= ip[i] 
+            self._ipu32 = struct.pack("bbbb", *self._ip)
         
     def __eq__(self, other_ip):
         if type(other_ip) == type(self):
@@ -187,7 +190,7 @@ class ipv4:
         
     
     def __str__(self):
-        res = "%d.%d.%d.%d" %( self._ip[0], self._ip[1], self._ip[2], self._ip[3] )
+        res = "%d.%d.%d.%d (%d)" %( self._ip[0], self._ip[1], self._ip[2], self._ip[3], self._ipu32 )
         return res
        
     def readIp(self):
@@ -196,6 +199,11 @@ class ipv4:
         if len(ip_split) != 4:
             print("Dot notation contains 4 values")
         self._ip = [int(int(i)&0xFF) for i in ip_split]
+        self._ipu32 = self._ip.to_bytes(4)
+        print(self)
             
-        
-        
+    def __add__(self, nr):
+        self._ipu32 + nr
+    
+    def __int__(self):
+        return self._ipu32

@@ -31,6 +31,9 @@ impl IPV4
             ip_u32 : ip_u32_new
         }
     }
+    pub fn to_u32(self:&IPV4) -> u32 {
+        self.ip_u32
+    }
     
 }
 

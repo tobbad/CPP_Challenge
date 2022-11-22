@@ -6,7 +6,7 @@ fn main(){
     let ipu8a = string_ip_v4(ps);
     let ip = IPV4::new(ipu8a);
     println!("{:?}", ip);
-    println!("{}", ip);
+    //println!("{}", ip);
 
 }
 

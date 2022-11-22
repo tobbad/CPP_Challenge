@@ -13,8 +13,8 @@ pub fn string_ip_v4(string:String) -> [u8;4]
     let mut idx = 0;
     for i in ss
     {
-        //println!("{:?}{:?}",i,ipPart); 
         let ip_part = i.parse().unwrap();
+//        println!("{:?} {:?} {}",i,ip_part, idx); 
         res[idx] = ip_part;
         idx = idx+1;
     }
@@ -25,7 +25,8 @@ impl IPV4
 {
     pub fn new(new_ip:[u8;4])->  IPV4 
     {
-        let ip_u32_new:u32= (new_ip[0]>>24 + new_ip[1]>>16+ new_ip[2]>>8 + new_ip[3]).into();
+        let ip_u32_new:u32= u32::from_be_bytes(new_ip);
+        //let ip_u32_new:u32= (new_ip[0]<<24 + new_ip[1]<<16+ new_ip[2]<<8 + new_ip[3]).into();
         IPV4{
             ip: new_ip,
             ip_u32 : ip_u32_new

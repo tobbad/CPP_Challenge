@@ -364,3 +364,21 @@ pub fn validate_isbn_10(isbn:String) -> bool
     (sum%11)==0
     
 }
+
+// struct Matrix 
+// {
+    // cols: u8,
+    // rows:u8,
+    // data: Vec<i32>,
+// }
+
+// impl Matrix
+// {
+    // fn new(cols:u8, rows:u8) -> Matrix  {
+        // Matrix {
+            // cols: cols,
+            // rows:rows,
+            // data :vec![0; (rows*cols).into()]
+        // }
+    // }
+// }

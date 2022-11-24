@@ -41,7 +41,7 @@ impl Display for IPV4
 {
     fn fmt(&self, f: &mut std::fmt::Formatter,) -> std::fmt::Result
     {
-        write!(f, "IP: {}.{}.{}.{}", self.ip[0], self.ip[1], self.ip[2],self.ip[3])
+        write!(f, "IP: {}.{}.{}.{} ({})", self.ip[0], self.ip[1], self.ip[2],self.ip[3], self.ip_u32)
     }
  
 }

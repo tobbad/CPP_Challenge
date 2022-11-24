@@ -40,16 +40,22 @@ bool validate_isbn_10(std::string isbn);
 class ipv4
 {
    std::array<unsigned char, 4> data;
+   uint32_t ip_u32;
 public:
-   constexpr ipv4() :data{ {0} } {}
+   constexpr ipv4() :data{ {0,0,0,0}}, ip_u32(0)} {}
    constexpr ipv4(unsigned char const a, unsigned char const b, 
-                  unsigned char const c, unsigned char const d):
-      data{{a,b,c,d}} {}
+                  unsigned char const c, unsigned char const d)
+      :data{{a,b,c,d}},
+      ip_u32(0)
+      {}
    explicit constexpr ipv4(unsigned long a) :
       data{ { static_cast<unsigned char>((a >> 24) & 0xFF), 
               static_cast<unsigned char>((a >> 16) & 0xFF),
               static_cast<unsigned char>((a >> 8) & 0xFF),
-              static_cast<unsigned char>(a & 0xFF) } } {}
+              static_cast<unsigned char>(a & 0xFF) }
+; 
+              a.ip_u32=a;} {
+              }
    ipv4(ipv4 const & other) noexcept : data(other.data) {}
    ipv4& operator=(ipv4 const & other) noexcept 
    {
@@ -64,7 +70,7 @@ public:
       return sstr.str();
    } 
 
-   constexpr unsigned long to_ulong() const noexcept
+   constexpr unsigned long to_u32() const noexcept
    {
       return
          (static_cast<unsigned long>(data[0]) << 24) |
@@ -78,7 +84,7 @@ public:
       os << static_cast<int>(a.data[0]) << '.' 
          << static_cast<int>(a.data[1]) << '.'
          << static_cast<int>(a.data[2]) << '.'
-         << static_cast<int>(a.data[3]);
+         << static_cast<int>(a.data[3]) << "(" << to_u32() << ")";
       return os;
    }
 
@@ -97,7 +103,7 @@ public:
    
    ipv4& operator++()
    {
-       *this = ipv4(1+ to_ulong());
+       *this = ipv4(1+ to_u32());
        return *this;
    }   
    
@@ -120,7 +126,7 @@ public:
 
    friend bool operator<(ipv4 const & a1, ipv4 const & a2) noexcept
    {
-      return a1.to_ulong() < a2.to_ulong();
+      return a1.to_u32g() < a2.to_u32();
    }
 
    friend bool operator>(ipv4 const & a1, ipv4 const & a2) noexcept

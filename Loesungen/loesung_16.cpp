@@ -17,17 +17,18 @@ int main (int argc, char *argv[]) {
     ipv4 a1, a2;
     std::cout << "Input rang: " << std::endl;
     std::cin >> a1 >> a2;
-    if (a2>a1)
-    {
-        for (ipv4 a=a1;a<=a2;a++)
-        {
-            std::cout << a << std::endl;
-        }
-    }
-    else 
-    {
-        std::cerr << "Invalid range"  << std::endl;
-    }        
+    std::cout <<"Iterate from " << a1 << " to " << a2 << std::endl;
+    // if (a2>a1)
+    // {
+        // for (ipv4 a=a1;a<=a2;a++)
+        // {
+            // std::cout << a << " " << a.to_ulong()  << std::endl;
+        // }
+    // }
+    // else 
+    // {
+        // std::cerr << "Invalid range"  << std::endl;
+    // }        
     
     
 }

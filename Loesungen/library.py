@@ -190,7 +190,7 @@ class ipv4:
         
     
     def __str__(self):
-        res = "%d.%d.%d.%d (%d)" %( self._ip[0], self._ip[1], self._ip[2], self._ip[3], self._ipu32 )
+        res = "[%d.%d.%d.%d] (%d)" %( self._ip[0], self._ip[1], self._ip[2], self._ip[3], self._ipu32 )
         return res
        
     def readIp(self):
@@ -198,8 +198,8 @@ class ipv4:
         ip_split = ip.split(".")
         if len(ip_split) != 4:
             print("Dot notation contains 4 values")
-        self._ip = [int(int(i)&0xFF) for i in ip_split]
-        self._ipu32 = self._ip.to_bytes(4)
+        self._ip = [int(i) for i in ip_split]
+        self._ipu32 = (self._ip[0]<<24) + (self._ip[1]<<16) + (self._ip[2]<<8) + self._ip[3]
         print(self)
             
     def __add__(self, nr):
@@ -207,3 +207,4 @@ class ipv4:
     
     def __int__(self):
         return self._ipu32
+    

@@ -6,8 +6,9 @@ def loesung():
     
     ip2=ipv4()
     ip2.readIp()
-    for i in range(int(ip1), int(ip2)):
-        print("%s" % i)
+    print(" Range %d to %d" %(ip1, ip2))
+#    for i in range(int(ip1), int(ip2)):
+#        print("%s" % i)
     
 
 

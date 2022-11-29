@@ -171,8 +171,24 @@ def validate_isbn_10(isbn):
         sum += w*(ord(d)-ord('0'))
         #print(w,ord(d)-ord('0'), sum%11)
     return (sum%11==0)
-    
-    
+
+class ip4iter:
+    def __init__(self, minimum, maximum):
+        print(type(minimum), type(maximum))
+        self._idx = int(minimum)
+        self._end = int(maximum)
+        print("Set miniumum to %d" % self._idx)
+        print("Set maximum¨ to %d" % self._end)
+
+    def __iter__(self):
+        return self
+
+    def __next__(self):
+        self._idx += 1
+        if self._idx < self._end:
+            return ipv4(self._idx)
+        raise StopIteration
+
 class ipv4:
     def __init__(self, ip = None):
         self._ip = [0,0,0,0]
@@ -180,19 +196,25 @@ class ipv4:
         if ip is None:
             return None 
         if type(ip) == type([] or type(ip) == type(())) and length(ip)==4:
+            print("Is tuple ", ip)
             for i in range(4):
                 self._ip[i]= ip[i] 
-            self._ipu32 = struct.pack("bbbb", *self._ip)
-        
+        elif type(ip) == int:
+            self._ipu32 = ip
+            self._ip = [(ip>>24)&0xFF, (ip>>16)&0xFF, (ip>>8)&0xFF, ip&0xFF]
+        self._ipu32 = int.from_bytes(struct.pack("BBBB", *self._ip), byteorder='big', signed=False)
+
     def __eq__(self, other_ip):
         if type(other_ip) == type(self):
             self._ip= ipv4(other_ip)
-        
-    
+
+    def __iter__(self):
+        return self.__
+
     def __str__(self):
-        res = "[%d.%d.%d.%d] (%d)" %( self._ip[0], self._ip[1], self._ip[2], self._ip[3], self._ipu32 )
+        res = "[%d.%d.%d.%d] (%d)" %(self._ip[0], self._ip[1], self._ip[2], self._ip[3], self._ipu32 )
         return res
-       
+
     def readIp(self):
         ip = input("IP in dot notation ")
         ip_split = ip.split(".")
@@ -201,10 +223,10 @@ class ipv4:
         self._ip = [int(i) for i in ip_split]
         self._ipu32 = (self._ip[0]<<24) + (self._ip[1]<<16) + (self._ip[2]<<8) + self._ip[3]
         print(self)
-            
+
     def __add__(self, nr):
         self._ipu32 + nr
-    
+
     def __int__(self):
         return self._ipu32
     

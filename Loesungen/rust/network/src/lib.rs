@@ -35,13 +35,13 @@ impl IPV4
         }
     }
     
-    pub fn steps_between(start:&Self, end:&Self) -> Result< (),u32> 
+    pub fn steps_between(start:&Self, end:&Self) -> Result< u32,String>
     {
         if  end.ip_u32 > start.ip_u32
         {
-             end.ip_u32- start.ip_u32
+             Ok(end.ip_u32- start.ip_u32)
         } else {
-            Err("No Proper oder")
+            Err(String::from("No Proper order"))
         }
     }
     

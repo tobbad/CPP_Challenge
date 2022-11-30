@@ -230,3 +230,58 @@ class ipv4:
     def __int__(self):
         return self._ipu32
     
+class array2d:
+    def __init__(self, xSize, ySize, dtype=np.int32):
+        self._arr= np.zeros((xSize, ySize),dtype=dtype)
+        
+    def set(self, other):
+        if type(other) == type(self):
+            for i in range(self._arr.shape[0]):
+                for j in range(self._arr.shape[1]):
+                    self._arr[i][j] = other.arr[i][j]
+        if type(other) != type([]):
+            raise ValueError("Wrong datatype given, must be list")
+        if len(other) != self._arr.shape[0]*self._arr.shape[1]:
+            errStr="Wrong vector size, given, must be %d" % (self._arr.shape[0]*self._arr.shape[1])
+            raise ValueError(errStr)
+        idx =0
+        for i in range(self._arr.shape[0]):
+            for j in range(self._arr.shape[1]):
+                self._arr[i][j] = other[idx]
+                idx+=1
+    
+    def __str__(self):
+        res = self._arr.__str__()
+        return res
+    
+    @property
+    def size(self):
+        return self._arr.shape
+    
+    @property
+    def arr(self):
+        return self._arr
+    
+    def fill(self,value):
+        for i in range(self._arr.shape[0]):
+            for j in range(self._arr.shape[1]):
+                self._arr[i][j] = value
+                
+    def swap(self, other):    
+        if type(other) != type(self):
+            raise ValueError("Wrong datatype, other must be %s" % (type(self)))
+        for i in range(self._arr.shape[0]):
+            for j in range(self._arr.shape[1]):
+                a = self._arr[i][j]
+                b = other.arr[i][j]
+                other.arr[i][j] = a
+                self._arr[i][j] = b 
+            
+    def move(self, other):
+        if type(other) != type(self):
+            raise ValueError("Wrong datatype, other must be %s" % (type(self)))
+        for i in range(self._arr.shape[0]):
+            for j in range(self._arr.shape[1]):
+                self._arr[i][j] = other.arr[i][j]
+   
+    

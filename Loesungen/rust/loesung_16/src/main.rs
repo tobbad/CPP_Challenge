@@ -14,7 +14,6 @@ fn main(){
         let ip = IPV4::new(i);
         println!("{}", ip);
     }
-    println!("{} {}", ip1, ip2);
 
 }
 

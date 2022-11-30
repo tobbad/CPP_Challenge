@@ -39,9 +39,10 @@ impl IPV4
     {
         if  end.ip_u32 > start.ip_u32
         {
-             Ok(end.ip_u32- start.ip_u32)
+            
+            Ok(end.ip_u32- start.ip_u32)
         } else {
-            Err(String::from("No Proper order"))
+             Err(String::from("No Proper order"))
         }
     }
     
@@ -52,9 +53,9 @@ impl IPV4
     pub fn to_u8_4(self:&IPV4) -> [u8;4]
     {
         let mut res: [u8;4]= [0,0,0,0];
-        for i in 0..3
+        for i in 0..4
         {
-            res[i] = (self.ip_u32>>(3*8-i)) as u8;
+            res[i] = (self.ip_u32>>((3-i)*8)) as u8;
         }
         res
     }

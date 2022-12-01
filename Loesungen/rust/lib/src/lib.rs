@@ -3,6 +3,8 @@ use std::io;
 use std::str;
 use rand;
 use rand::Rng;
+use std::fmt::{Display};
+
 
 pub fn get_int_fromcl(question:&str)->u64
 {
@@ -365,20 +367,49 @@ pub fn validate_isbn_10(isbn:String) -> bool
     
 }
 
-// struct Matrix 
-// {
-    // cols: u8,
-    // rows:u8,
-    // data: Vec<i32>,
-// }
+pub struct Matrix 
+{
+    xsize: u8,
+    ysize:u8,
+    data: Vec<i32>,
+}
 
-// impl Matrix
-// {
-    // fn new(cols:u8, rows:u8) -> Matrix  {
-        // Matrix {
-            // cols: cols,
-            // rows:rows,
-            // data :vec![0; (rows*cols).into()]
-        // }
-    // }
-// }
+impl Matrix
+{
+    pub fn new(xsize:u8, ysize:u8) -> Matrix  {
+        Matrix {
+            xsize: xsize,
+            ysize:ysize,
+            data :vec![0; (xsize*ysize).into()]
+        }
+    }
+    pub fn set(&self)
+    {
+        println!("set ");
+    }
+}
+
+impl Display for Matrix
+{
+    fn fmt(&self, f: &mut std::fmt::Formatter,) -> std::fmt::Result
+    {   
+    
+        let mut res = String::new();
+        res+= "[\n";
+        let mut idx = 0;
+        for i in 0..self.ysize
+        {
+            //let part = self.data[(i*self.rows)..((i+1)*self.rows)];
+            res += "  [ ";
+            for j in 0..self.xsize
+            {
+                res += &format!("{} ",self.data[idx]);
+                idx+=1;
+            }          
+            res+= "]\n";
+        }
+        res += "]";
+        write!(f, "{}", res)
+    }
+ 
+}

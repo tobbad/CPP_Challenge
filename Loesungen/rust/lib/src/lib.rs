@@ -371,7 +371,7 @@ pub struct Matrix
 {
     xsize: u8,
     ysize:u8,
-    data: Vec<i32>,
+    pub data: Vec<Vec<i32>>,
 }
 
 impl Matrix
@@ -380,36 +380,62 @@ impl Matrix
         Matrix {
             xsize: xsize,
             ysize:ysize,
-            data :vec![0; (xsize*ysize).into()]
+            data :{
+				let mut t = Vec::new();
+				for _x in 0..ysize
+				{
+					let mut t2 = Vec::new();
+					for _y in 0..xsize
+					{
+						t2.push(0);
+					}
+					t.push(t2);
+				}
+				t
+            },
         }
     }
-    pub fn set(&self)
+    pub fn set(&mut self, vec: &[i32])
     {
-        println!("set ");
+        println!("set «{:?} {} {} ", vec, vec.len(), self.data.capacity());
+        let max = if vec.len()>=self.data.capacity()
+        {
+			self.data.capacity()
+        }
+        else
+        {
+			0
+        };
+        println!("{:?} {}", self.data, max);
+        for idx in 0..max
+        {
+			 let i = idx/self.xsize as usize;
+			 let j = idx%self.ysize as usize;
+			 println!("{} {} {}", i,j, idx);
+			 self.data[i][j] = vec[idx];
+        }
     }
 }
 
 impl Display for Matrix
 {
     fn fmt(&self, f: &mut std::fmt::Formatter,) -> std::fmt::Result
-    {   
-    
+    {
+
         let mut res = String::new();
         res+= "[\n";
-        let mut idx = 0;
         for i in 0..self.ysize
         {
-            //let part = self.data[(i*self.rows)..((i+1)*self.rows)];
             res += "  [ ";
             for j in 0..self.xsize
             {
-                res += &format!("{} ",self.data[idx]);
-                idx+=1;
-            }          
+				let  idx =(i*self.ysize + j) as usize;
+                res += &format!("{} ",self.data[i][j]);
+            }
             res+= "]\n";
         }
         res += "]";
         write!(f, "{}", res)
     }
- 
+
 }

@@ -387,7 +387,7 @@ impl Matrix
 					let mut t2 = Vec::new();
 					for _y in 0..xsize
 					{
-						t2.push(0);
+						t2.push(0i32);
 					}
 					t.push(t2);
 				}
@@ -397,10 +397,11 @@ impl Matrix
     }
     pub fn set(&mut self, vec: &[i32])
     {
-        println!("set «{:?} {} {} ", vec, vec.len(), self.data.capacity());
-        let max = if vec.len()>=self.data.capacity()
+        let arrSize:usize  =  self.data.iter().map(Vec::len).sum();
+        println!("set «{:?} {} {} ", vec, vec.len(),arrSize);
+        let max = if vec.len()>=arrSize
         {
-			self.data.capacity()
+			arrSize
         }
         else
         {
@@ -411,10 +412,18 @@ impl Matrix
         {
 			 let i = idx/self.xsize as usize;
 			 let j = idx%self.ysize as usize;
-			 println!("{} {} {}", i,j, idx);
+			 self.data[i][j] = vec[idx];
+			 println!("{} {} {} {}", i,j, idx, self.data[i][j]);
 			 self.data[i][j] = vec[idx];
         }
     }
+}
+
+pub fn join(a Vec<i32>) -> String
+{
+    println!("{:?}",a);
+    a.iter().fold(String::new(),|mut s,&n| {write!(s,"{}",n).ok(); s})
+
 }
 
 impl Display for Matrix
@@ -424,15 +433,17 @@ impl Display for Matrix
 
         let mut res = String::new();
         res+= "[\n";
-        for i in 0..self.ysize
+        for  i:usize in 0..self.ysize
         {
-            res += "  [ ";
-            for j in 0..self.xsize
-            {
-				let  idx =(i*self.ysize + j) as usize;
-                res += &format!("{} ",self.data[i][j]);
-            }
-            res+= "]\n";
+            res += join(self.data[i]);
+            // res += format!(*"  [ {}", self.data[i]);
+            // for j  in 0..self.xsize
+            // {
+				// let  idx  =(i*self.ysize + j) as usize;
+                // let val = self.data[i][j];
+                // res += &format!("{} ", val);
+            // }
+            // res+= "]\n";
         }
         res += "]";
         write!(f, "{}", res)

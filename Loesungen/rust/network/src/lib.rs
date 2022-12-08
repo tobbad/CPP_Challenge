@@ -1,5 +1,4 @@
 use std::fmt::{Display};
-use std::fmt::Error;
 #[derive(Debug)]
 pub struct IPV4
 {

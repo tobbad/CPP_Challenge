@@ -3,7 +3,7 @@ use std::io;
 use std::str;
 use rand;
 use rand::Rng;
-use std::fmt::{Display};
+use std::fmt::Display;
 
 
 pub fn get_int_fromcl(question:&str)->u64
@@ -397,33 +397,52 @@ impl Matrix
     }
     pub fn set(&mut self, vec: &[i32])
     {
-        let arrSize:usize  =  self.data.iter().map(Vec::len).sum();
-        println!("set «{:?} {} {} ", vec, vec.len(),arrSize);
-        let max = if vec.len()>=arrSize
+        let arr_size:usize  =  self.data.iter().map(Vec::len).sum();
+        let max = if vec.len()>=arr_size
         {
-			arrSize
+			arr_size
         }
         else
         {
 			0
         };
-        println!("{:?} {}", self.data, max);
         for idx in 0..max
         {
 			 let i = idx/self.xsize as usize;
 			 let j = idx%self.ysize as usize;
 			 self.data[i][j] = vec[idx];
-			 println!("{} {} {} {}", i,j, idx, self.data[i][j]);
 			 self.data[i][j] = vec[idx];
         }
     }
-}
 
-pub fn join(a Vec<i32>) -> String
-{
-    println!("{:?}",a);
-    a.iter().fold(String::new(),|mut s,&n| {write!(s,"{}",n).ok(); s})
+	pub fn fill(&mut self, val:i32)
+	{
+		for i in 0..self.ysize as usize as usize
+		{
+			for j in 0..self.xsize as usize
+			{
+				self.data[i][j]=val;
+			}
 
+		}
+
+	}
+
+	pub fn swap(&mut self, other: &mut Matrix )
+	{
+		for i in 0..self.ysize as usize as usize
+		{
+			for j in 0..self.xsize as usize
+			{
+				let s = self.data[i][j];
+				let o = other.data[i][j];
+				self.data[i][j] = o;
+				other.data[i][j] = s;
+			}
+
+		}
+
+	}
 }
 
 impl Display for Matrix
@@ -433,17 +452,19 @@ impl Display for Matrix
 
         let mut res = String::new();
         res+= "[\n";
-        for  i:usize in 0..self.ysize
+        for  i in 0..self.ysize as usize
         {
-            res += join(self.data[i]);
-            // res += format!(*"  [ {}", self.data[i]);
-            // for j  in 0..self.xsize
-            // {
-				// let  idx  =(i*self.ysize + j) as usize;
-                // let val = self.data[i][j];
-                // res += &format!("{} ", val);
-            // }
-            // res+= "]\n";
+            //res += format!("  [ {}", self.data[i]);
+            for j  in 0..self.xsize as usize
+            {
+				if j==0
+				{	
+					res += &format!(" [");
+				}
+                let val = self.data[i][j];
+                 res += &format!("{} ", val);
+            }
+            res+= "]\n";
         }
         res += "]";
         write!(f, "{}", res)

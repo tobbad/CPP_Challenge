@@ -9,6 +9,7 @@ def loesung():
             a.arr[i][j] *= 2
     print(a)
     b= array2d(2,3)
+    print(b)
     b.fill(1)
     a.swap(b)
     c= array2d(2,3)

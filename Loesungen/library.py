@@ -251,7 +251,14 @@ class array2d:
                 idx+=1
     
     def __str__(self):
-        res = self._arr.__str__()
+        res="[\n"
+        for i in range(self._arr.shape[0]):
+            for j in range(self._arr.shape[1]):
+                if j==0:
+                    res += " ["
+                res += "%d " %self._arr[i][j]
+            res += "]\n"
+        res += "]\n"
         return res
     
     @property
@@ -283,5 +290,29 @@ class array2d:
         for i in range(self._arr.shape[0]):
             for j in range(self._arr.shape[1]):
                 self._arr[i][j] = other.arr[i][j]
+
+def num_of_digits(nr):
+    if nr>0:
+        return int(log10(nr)+1)
+    else:
+        return 1
    
-    
+def pascal_dreieck(line_cnt):
+    lines=[]
+    x=1
+    for i in range(0, line_cnt):
+        line = ' '*(line_cnt-i-1)*(line_cnt>>1)
+        for j in range(0, i+1):
+            y = x
+            x = x*(i-j)/(j+1)
+            maxlen = num_of_digits(x)-1
+            print("%d \t %d" % (maxlen, x))
+            line += "%d " % y
+            line += " "*(line_cnt-1-maxlen-line_cnt>>1)
+        line+= "\n"
+        print("%s"% line)
+        lines.append(line)
+    return lines        
+        
+            
+        

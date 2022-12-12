@@ -471,3 +471,13 @@ impl Display for Matrix
     }
 
 }
+
+fn pascal_dreieck(line_cnt:u8) -> Vec<String>
+{
+    let mut res = Vec::<String> = Vec::new();
+    for i in 0..line_cnt
+    {
+        res.push(String::from(" "));
+    }
+    res 
+}

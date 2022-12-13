@@ -291,26 +291,44 @@ class array2d:
             for j in range(self._arr.shape[1]):
                 self._arr[i][j] = other.arr[i][j]
 
+def factorial(n):
+    res = 1
+    for i in range(2,n+1):
+        res *= i
+    return res
+    
+
+
+def binomial_koeffizent(n, k):
+    #print("%d tief %d " %(n,k), end= "")
+    if k>n:
+        res = 0
+    else:
+        zaehler = factorial(n)
+        nenner =factorial(k)*factorial(n-k)
+        res = zaehler/nenner
+    #print(res)
+    return res
+    
+    
+
 def num_of_digits(nr):
     if nr>0:
         return int(log10(nr)+1)
     else:
         return 1
    
-def pascal_dreieck(line_cnt):
-    lines=[]
+def pascal_dreieck(line_cnt, scan=True):
+    n = num_of_digits(binomial_koeffizent(line_cnt,line_cnt>>1))
+    lines=[((line_cnt<<1)*" ")+"1"]
     x=1
-    for i in range(0, line_cnt):
-        line = ' '*(line_cnt-i-1)*(line_cnt>>1)
-        for j in range(0, i+1):
-            y = x
-            x = x*(i-j)/(j+1)
-            maxlen = num_of_digits(x)-1
-            print("%d \t %d" % (maxlen, x))
-            line += "%d " % y
-            line += " "*(line_cnt-1-maxlen-line_cnt>>1)
+    fmt = "{:<%d} "%n
+    for i in range(1, line_cnt):
+        line = ' '*((line_cnt<<1)-(2*i))
+        for n in range(0, i+1):
+            res = int(binomial_koeffizent(i, n))
+            line += fmt.format(res )
         line+= "\n"
-        print("%s"% line)
         lines.append(line)
     return lines        
         

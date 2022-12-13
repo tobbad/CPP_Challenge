@@ -1,12 +1,10 @@
 use lib::{get_int_fromcl, pascal_dreieck};
-use factorial::Factorial;
 
 fn main(){
     
-    let line_nr = get_int_fromcl(&String::from("Count of lines "));
+    let line_nr = get_int_fromcl(&String::from("Count of lines ")) as u8;
     
-    println!("{}",10_usize.factorial());
-    lines = pascal_dreieck(line_nr);
+    let lines = pascal_dreieck(line_nr+2);
     for line in lines
     {
         println!("{}", line);

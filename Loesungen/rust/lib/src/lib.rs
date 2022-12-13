@@ -472,12 +472,44 @@ impl Display for Matrix
 
 }
 
-fn pascal_dreieck(line_cnt:u8) -> Vec<String>
+fn factorial(n:u8) -> u32
 {
-    let mut res = Vec::<String> = Vec::new();
-    for i in 0..line_cnt
+    let mut  p:u32=1;
+    for i in 1..n
     {
-        res.push(String::from(" "));
+        p=p*(i as u32);
+    }
+    p
+}
+
+fn binomial_koeffizient(n:u8, k:u8) -> u32
+{
+    if k>n
+    {
+        0
+    }
+    else {
+        let zaehler = factorial(n as u8);
+        let nenner = factorial(k as u8)*factorial((n-k) as u8);
+        zaehler/nenner
+    }
+}
+    
+
+pub fn pascal_dreieck(line_cnt:u8) -> Vec<String>
+{
+    let mut res = Vec::new();
+    
+    for n in 0..line_cnt
+    {
+        let intend = (line_cnt<<1)-2*n-1;
+        let mut line = String::from(" ").repeat(intend as usize);
+        for k in 0..n+1
+        {
+            let k = binomial_koeffizient(n,k);
+            line =line+&format!(" {:3} ",k);
+        }
+        res.push(line);
     }
     res 
 }

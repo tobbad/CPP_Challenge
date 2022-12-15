@@ -475,7 +475,7 @@ impl Display for Matrix
 fn factorial(n:u8) -> u32
 {
     let mut  p:u32=1;
-    for i in 1..n
+    for i in 1..n+1
     {
         p=p*(i as u32);
     }
@@ -491,7 +491,9 @@ fn binomial_koeffizient(n:u8, k:u8) -> u32
     else {
         let zaehler = factorial(n as u8);
         let nenner = factorial(k as u8)*factorial((n-k) as u8);
+        //println!("{} {} {} {} {}", n, k,zaehler,nenner,zaehler/nenner);
         zaehler/nenner
+
     }
 }
     
@@ -502,12 +504,12 @@ pub fn pascal_dreieck(line_cnt:u8) -> Vec<String>
     
     for n in 0..line_cnt
     {
-        let intend = (line_cnt<<1)-2*n-1;
+        let intend = (line_cnt<<1)-2*n+1;
         let mut line = String::from(" ").repeat(intend as usize);
         for k in 0..n+1
         {
             let k = binomial_koeffizient(n,k);
-            line =line+&format!(" {:3} ",k);
+            line =line+&format!(" {:4} ",k);
         }
         res.push(line);
     }

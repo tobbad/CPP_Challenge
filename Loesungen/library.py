@@ -321,7 +321,6 @@ def num_of_digits(nr):
 def pascal_dreieck(line_cnt, scan=True):
     n = num_of_digits(binomial_koeffizent(line_cnt,line_cnt>>1))
     lines=[((line_cnt<<1)*" ")+"1"]
-    x=1
     fmt = "{:<%d} "%n
     for i in range(1, line_cnt):
         line = ' '*((line_cnt<<1)-(2*i))

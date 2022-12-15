@@ -9,6 +9,9 @@
 #include <array>
 #include <numeric>
 #include <string_view>
+#include <cstdint>
+#include <fmt/core.h>
+using namespace fmt;
 
 int gcd(int a, int b)
 {
@@ -214,25 +217,6 @@ std::pair<unsigned long long, long> longest_collatz(unsigned long long limit)
     return std::make_pair(number, length);
 }
 
-/*bool validate_isbn_10(std::string_view isbn)
-{
-    auto valid = false;
-    if (isbn.size() == 10 &&
-        std::count_if(std::begin(isbn), std::end(isbn), isdigit)==10)
-    {
-        auto w=10;
-        auto sum=std::accumulate(
-            std::begin(isbn),std::end(isbn),0,
-            [&w](int const total, char const c ){
-                return total + w-- * (c-'0');
-            }
-        ));
-        
-        valid = !(sum%11);
-    }
-    return valid;
-}
-*/
 
 bool validate_isbn_10(std::string isbn)
 {
@@ -257,4 +241,69 @@ bool validate_isbn_10(std::string isbn)
     }
 
    return valid;
+}
+
+unsigned int factorial(unsigned int n) {
+    unsigned int res = 1;
+    
+    for (unsigned int i=1;i<=n;i++)
+    {
+        res *= i;
+    }
+    return res;
+    
+}
+
+unsigned int binomial_koeffizent(unsigned int  n, unsigned int k){
+    unsigned int res =0;
+    //print("%d tief %d " %(n,k), end= "")
+    if (k<=n)
+    {
+        unsigned int zaehler = factorial(n);
+        unsigned int nenner =factorial(k)*factorial(n-k);
+        res = zaehler/nenner;
+    }
+    //std::cout << res << std::endl;
+    return res;
+    }
+    
+    
+
+unsigned int num_of_digits(unsigned int nr){
+    if (nr>0){
+        return int(log10(double(nr)+1));
+    }else {
+        return 1;
+    }
+}
+   
+std::string einruecken(uint32_t cnt){
+    std::string line;
+   for (uint32_t i=0;i<cnt<<1;i++)
+    {
+        line.append(" ");
+    }
+    return line;
+}
+
+
+std::string pascal_dreieck(int32_t count_of_lines)
+{
+    std::string lines="";
+    unsigned int n = num_of_digits(binomial_koeffizent(count_of_lines,count_of_lines<<2));
+    for (int i=0;i<count_of_lines; i++)
+    {
+        std::string line = einruecken((count_of_lines<<2)-i);
+        std::cout << (count_of_lines<<2)-i << std::endl;
+        for (int32_t n=0;n<=i;n++)
+        {
+            uint32_t binCoef = int(binomial_koeffizent(i, n));
+            line += std::to_string(binCoef)+" ";
+        }
+        line+= "\n";
+        lines.append(line);
+    }
+    
+    return lines;        
+    
 }

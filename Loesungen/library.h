@@ -246,5 +246,10 @@ void print_array2d(array2d<T, R, C> const & arr)
       std::cout << std::endl;
    }
 }
+unsigned int factorial(unsigned int n);
+unsigned int binomial_koeffizent(unsigned int  n, unsigned int k);
+unsigned int num_of_digits(unsigned int nr);
+std::string einruecken(uint32_t cnt);
+std::string pascal_dreieck(int32_t count_of_lines);
 
 #endif

@@ -6,7 +6,7 @@ def loesung():
     
     lines = pascal_dreieck(line_cnt)
     for l in lines:
-        print("%s" % l)
+        print("%s" % l, end = "")
 
 if __name__ == "__main__":
     loesung()

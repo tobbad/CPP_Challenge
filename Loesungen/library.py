@@ -322,11 +322,11 @@ def pascal_dreieck(line_cnt, scan=True):
     n = num_of_digits(binomial_koeffizent(line_cnt,line_cnt>>1))
     lines=[((line_cnt<<1)*" ")+"1"]
     fmt = "{:<%d} "%n
-    for i in range(1, line_cnt):
-        line = ' '*((line_cnt<<1)-(2*i))
+    for i in range(0, line_cnt+1):
+        line = ' '*((line_cnt<<1)-(n>>1)<<1*i)
         for n in range(0, i+1):
             res = int(binomial_koeffizent(i, n))
-            line += fmt.format(res )
+            line += fmt.format(res)
         line+= "\n"
         lines.append(line)
     return lines        

@@ -509,7 +509,7 @@ pub fn pascal_dreieck(line_cnt:u8) -> Vec<String>
         for k in 0..n+1
         {
             let k = binomial_koeffizient(n,k);
-            line =line+&format!(" {:4} ",k);
+            line =line+&format!("{:4}",k);
         }
         res.push(line);
     }

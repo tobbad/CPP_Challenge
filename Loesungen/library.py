@@ -6,7 +6,7 @@ import optparse
 import struct
 
 
-def gcd(a,b):
+def gcd(a, b):
     if b == 0:
         return a
     else:
@@ -38,7 +38,7 @@ def sum_proper_divisors(num):
     res = 1
     for i in range(2, int(ceil(sqrt(num)))):
         # print("Check %d" %i)
-        if num % i==0:
+        if num % i ==0:
             res += i if (i == num/i) else (i+num/i)
     # print("num: %d Sum %d" %(num, res))
     return res
@@ -59,7 +59,7 @@ def print_armstong():
             for k in range(1, 10):
                 abc = 100*i+10*j+k
                 abm = i*i*i+j*j*j+k*k*k
-                if  abc == abm:
+                if abc == abm:
                     print("%d ; %d ; %d ; %d" % (abm, i, j, k))
 
 
@@ -97,11 +97,11 @@ def gray_decode(gray):
 
 
 def to_binary(number, digits=5):
-    mask = (1<<digits)-1
+    mask = (1 << digits)-1
     number &= mask
     string = ""
     for i in range(digits):
-        if number & (1 << i)==0:
+        if number & (1 << i) == 0:
             string = "0"+string
         else:
             string = "1"+string
@@ -212,7 +212,7 @@ class ipv4:
         elif type(ip) == int:
             self._ipu32 = ip
             self._ip = [(ip >> 24) & 0xFF, (ip >> 16) & 0xFF, (ip >> 8) & 0xFF, ip & 0xFF]
-        self._ipu32 = int.from_bytes(struct.pack("BBBB", *self._ip), byteorder='big', signed=False)
+        self._ipu32 = int.from_bytes(struct.pack("BBBB", *self._ip), byteorder = 'big', signed=False)
 
     def __eq__(self, other_ip):
         if type(other_ip) == type(self):
@@ -253,7 +253,7 @@ class array2d:
         if isinstance(other, list):
             raise ValueError("Wrong datatype given, must be list")
         if len(other) != self._arr.shape[0]*self._arr.shape[1]:
-            errStr = "Wrong vector size, given, must be %d" % (self._arr.shape[0]*self._arr.shape[1])
+            errStr = "Wrong vector size, given, must be %d" % (self._arr.shape[0] * self._arr.shape[1])
             raise ValueError(errStr)
         idx =0
         for i in range(self._arr.shape[0]):

@@ -331,11 +331,12 @@ def num_of_digits(nr):
 
 def pascal_dreieck(line_cnt, scan=True):
     n = num_of_digits(binomial_koeffizent(line_cnt, line_cnt >> 1))
-    n = (n >> 1) << 1 + 1
+    n = ((n >> 1) << 1) + 1
     lines = []
-    fmt = "{:<%d} " % n
+    fmt = "{:^%d} " % n
     for n in range(0, line_cnt):
-        line = ' ' * ((line_cnt << 1)-2*n+1)
+        intend = (line_cnt << 1) - 2 * n + 1
+        line = ' ' * intend
         for k in range(0, n+1):
             res = int(binomial_koeffizent(n, k))
             line += fmt.format(res)

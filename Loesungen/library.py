@@ -1,6 +1,6 @@
 
 import numpy as np
-from math import *
+from math import ceil, sqrt, log10
 import random
 import optparse
 import struct
@@ -38,7 +38,7 @@ def sum_proper_divisors(num):
     res = 1
     for i in range(2, int(ceil(sqrt(num)))):
         # print("Check %d" %i)
-        if num % i ==0:
+        if num % i == 0:
             res += i if (i == num/i) else (i+num/i)
     # print("num: %d Sum %d" %(num, res))
     return res
@@ -46,9 +46,9 @@ def sum_proper_divisors(num):
 
 def print_amicables(limit):
     for number in range(4, limit):
-        sum1 = sum_proper_divisors(number);
+        sum1 = sum_proper_divisors(number)
         if (sum1 < limit):
-            sum2 = sum_proper_divisors(sum1);
+            sum2 = sum_proper_divisors(sum1)
             if ((sum2 == number) and (number != sum1)):
                 print("%d, %d" % (number, sum1))
 
@@ -112,7 +112,7 @@ def to_roman(number):
     if number >= 10000:
         return "Not possible"
     else:
-        table=(
+        table = (
             (1000, "M"),
             (900, "CM"),
             (500, "D"),
@@ -205,10 +205,10 @@ class ipv4:
         self._ipu32 = 0
         if ip is None:
             return None 
-        if (isinstance(ip, list) or isinstance(ip, tuple)) and length(ip) == 4:
+        if (isinstance(ip, list) or isinstance(ip, tuple)) and len(ip) == 4:
             print("Is tuple ", ip)
             for i in range(4):
-                self._ip[i]= ip[i] 
+                self._ip[i] = ip[i]
         elif type(ip) == int:
             self._ipu32 = ip
             self._ip = [(ip >> 24) & 0xFF, (ip >> 16) & 0xFF, (ip >> 8) & 0xFF, ip & 0xFF]
@@ -243,7 +243,7 @@ class ipv4:
 
 class array2d:
     def __init__(self, xSize, ySize, dtype=np.int32):
-        self._arr = np.zeros((xSize, ySize),dtype=dtype)
+        self._arr = np.zeros((xSize, ySize), dtype=dtype)
 
     def set(self, other):
         if type(other) == type(self):
@@ -324,14 +324,14 @@ def binomial_koeffizent(n, k):
 
 def num_of_digits(nr):
     if nr > 0:
-        return int(log10(nr)+1)
+        return int(log10(nr) + 1)
     else:
         return 1
 
 
 def pascal_dreieck(line_cnt, scan=True):
     n = num_of_digits(binomial_koeffizent(line_cnt, line_cnt >> 1))
-    lines = ((line_cnt << 1) * " ") + "1"]
+    lines = [((line_cnt << 1) * " ") + "1"]
     fmt = "{:<%d} " % n
     for i in range(0, line_cnt+1):
         line = ' ' * ((line_cnt << 1) - (n >> 1) << 1 * i)

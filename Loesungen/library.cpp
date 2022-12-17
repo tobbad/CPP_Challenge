@@ -10,8 +10,6 @@
 #include <numeric>
 #include <string_view>
 #include <cstdint>
-#include <fmt/core.h>
-using namespace fmt;
 
 int gcd(int a, int b)
 {
@@ -256,22 +254,23 @@ unsigned int factorial(unsigned int n) {
 
 unsigned int binomial_koeffizent(unsigned int  n, unsigned int k){
     unsigned int res =0;
-    //print("%d tief %d " %(n,k), end= "")
     if (k<=n)
     {
         unsigned int zaehler = factorial(n);
         unsigned int nenner =factorial(k)*factorial(n-k);
         res = zaehler/nenner;
     }
-    //std::cout << res << std::endl;
+    //std::cout << "n = " << n << " k = " << k << " -> " << res << std::endl;
     return res;
-    }
+}
     
     
 
 unsigned int num_of_digits(unsigned int nr){
     if (nr>0){
-        return int(log10(double(nr)+1));
+        int32_t dCnt = ceil(log10(double(nr)));
+        //std::cout << "bin= " <<nr << " digitcout  " << dCnt << std::endl;
+        return dCnt;
     }else {
         return 1;
     }
@@ -279,26 +278,50 @@ unsigned int num_of_digits(unsigned int nr){
    
 std::string einruecken(uint32_t cnt){
     std::string line;
-   for (uint32_t i=0;i<cnt<<1;i++)
+   for (uint32_t i=0;i<cnt;i++)
     {
         line.append(" ");
     }
     return line;
 }
 
+std::string fixed_width_i32(int32_t val, uint8_t width)
+{
+    std::string res = " ";
+    if (val >0) {
+        res = std::to_string(val);
+    }
+    while (res.length() <= width)
+    {
+        if (res.length()%2==0)
+        {
+            res += " ";
+        } else {
+            res = " "+ res;
+        }
+    }
+    //std::cout << "´" << res.length() << "´" << std::endl;
+    return res+ " ";
+}
 
 std::string pascal_dreieck(int32_t count_of_lines)
 {
     std::string lines="";
-    unsigned int n = num_of_digits(binomial_koeffizent(count_of_lines,count_of_lines<<2));
-    for (int i=0;i<count_of_lines; i++)
+    unsigned int width = 2+ num_of_digits(binomial_koeffizent(count_of_lines,count_of_lines>>1));
+    //std::cout << "max bin= " << binomial_koeffizent(count_of_lines,count_of_lines>>1) << std::endl;
+    width = 4;
+    for (int n=0;n<count_of_lines; n++)
     {
-        std::string line = einruecken((count_of_lines<<2)-i);
-        std::cout << (count_of_lines<<2)-i << std::endl;
-        for (int32_t n=0;n<=i;n++)
+        int32_t indent = (count_of_lines * width) - width * n + width;
+        std::string line = einruecken(indent);
+        std::cout << indent << " " << width << std::endl;
+        for (int32_t k=0;k<=n;k++)
         {
-            uint32_t binCoef = int(binomial_koeffizent(i, n));
-            line += std::to_string(binCoef)+" ";
+            //std::cout << "    " << indent << " " << std::endl;
+            uint32_t binCoef = int(binomial_koeffizent(n, k));
+            line += fixed_width_i32(binCoef, width);
+            //line += fixed_width_i32(-1, width);
+
         }
         line+= "\n";
         lines.append(line);

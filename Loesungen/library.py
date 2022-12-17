@@ -329,17 +329,32 @@ def num_of_digits(nr):
         return 1
 
 
+def einruecken(cnt):
+    line=""
+    for i in range(0, cnt):
+        line += " "
+    return line
+
+
 def pascal_dreieck(line_cnt, scan=True):
-    n = num_of_digits(binomial_koeffizent(line_cnt, line_cnt >> 1))
-    n = ((n >> 1) << 1) + 1
+    width = num_of_digits(binomial_koeffizent(line_cnt, line_cnt >> 1))
+    width = ((width >> 1) << 1) + 1
+    width = 4
     lines = []
-    fmt = "{:^%d} " % n
+    fmt = "{:^%d} " % width
     for n in range(0, line_cnt):
-        intend = (line_cnt << 1) - 2 * n + 1
-        line = ' ' * intend
+        intend = (line_cnt * width) - width * n + width
+        print("%d %d" % (intend, width))
+        line = einruecken(intend)
         for k in range(0, n+1):
             res = int(binomial_koeffizent(n, k))
             line += fmt.format(res)
+            #line += fmt.format(0)
         line += "\n"
         lines.append(line)
+    for i in range(0, line_cnt):
+        line = einruecken(i)
+        line += "%d\n" % i
+        lines.append(line)
+
     return lines

@@ -330,7 +330,7 @@ def num_of_digits(nr):
 
 
 def einruecken(cnt):
-    line=""
+    line = ""
     for i in range(0, cnt):
         line += " "
     return line
@@ -349,7 +349,7 @@ def pascal_dreieck(line_cnt, scan=True):
         for k in range(0, n+1):
             res = int(binomial_koeffizent(n, k))
             line += fmt.format(res)
-            #line += fmt.format(0)
+            line += "   "
         line += "\n"
         lines.append(line)
     for i in range(0, line_cnt):

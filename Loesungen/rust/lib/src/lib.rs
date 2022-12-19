@@ -4,6 +4,7 @@ use std::str;
 use rand;
 use rand::Rng;
 use std::fmt::Display;
+use std::{env, fs};
 
 
 pub fn get_int_fromcl(question:&str)->u64
@@ -512,4 +513,11 @@ pub fn pascal_dreieck(line_cnt:u8) -> Vec<String>
         res.push(line);
     }
     res 
+}
+
+pub fn recursive_size(root_folder:&str) -> Vec<String>
+{
+    let mut res = Vec::new();
+    
+    res
 }

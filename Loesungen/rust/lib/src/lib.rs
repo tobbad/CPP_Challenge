@@ -5,7 +5,7 @@ use rand;
 use rand::Rng;
 use std::fmt::Display;
 use std::{env, fs};
-
+use walkdir::WalkDir;
 
 pub fn get_int_fromcl(question:&str)->u64
 {
@@ -517,9 +517,18 @@ pub fn pascal_dreieck(line_cnt:u8) -> Vec<String>
     res 
 }
 
-pub fn recursive_size(root_folder:&str) -> Vec<String>
+pub fn recursive_size(root_folder:&str) -> Vec<Vec<(&str, usize)>>
 {
-    let mut res = Vec::new();
-    
-    res
+	let mut res :Vec<Vec<(&str, usize)>> = vec![];
+	for entry in WalkDir::new(root_folder)
+		.follow_links(true)
+		.into_iter()
+		.filter_map(|e| e.ok()) {
+		let f_name = entry.file_name().clone();
+		//res.append(f_name);
+		println!("{:?}", &f_name);
+		res.push(f_name, 1);
+	}
+	res
 }
+

@@ -16,9 +16,9 @@ using namespace std;
 int main (int argc, char *argv[]) {
    int count_of_lines;
 
-   std::cout << "Pascal dreieck" << std::endl;
+   std::cout << "Pascal Dreieck" << std::endl;
    
-   std::cout << "Anzahl linien: ";
+   std::cout << "Anzahl Linien: ";
    std::cin >> count_of_lines;
    std::string res = pascal_dreieck(count_of_lines);
    std::cout << res << std::endl; 

@@ -517,17 +517,27 @@ pub fn pascal_dreieck(line_cnt:u8) -> Vec<String>
     res 
 }
 
-pub fn recursive_size(root_folder:&str) -> Vec<Vec<(&str, usize)>>
+fn print_type_of<T>(_: &T) {
+    println!("{}", std::any::type_name::<T>())
+}
+
+pub fn recursive_size(root_folder:&str) -> Vec<(&str, usize)>
 {
-	let mut res :Vec<Vec<(&str, usize)>> = vec![];
+	let mut res: Vec<(&str, usize)> = Vec::new();
 	for entry in WalkDir::new(root_folder)
 		.follow_links(true)
 		.into_iter()
 		.filter_map(|e| e.ok()) {
-		let f_name = entry.file_name().clone();
+		let f_name = match entry.file_name().to_str()
+        {
+            Some(path) => path,
+            _ => "Nope",
+            
+        };
+        print_type_of(&f_name);
 		//res.append(f_name);
 		println!("{:?}", &f_name);
-		res.push(f_name, 1);
+		//res.push((&f_name, 1));
 	}
 	res
 }

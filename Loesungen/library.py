@@ -358,12 +358,12 @@ def pascal_dreieck(line_cnt, scan=True):
         line += "%d\n" % i
         lines.append(line)
 
-    return lines
-
-
+    return lines        
+        
 def recursive_size(root_folder, res=None):
-    if res is None:
+    if res ==None:
         res = {root_folder:0}
+    
     for root, subdirs, files in os.walk(root_folder, True): 
         if root not in res:
             res[root]=0
@@ -372,10 +372,11 @@ def recursive_size(root_folder, res=None):
             fname = os.path.join(root, f)
             file_stat = os.stat(fname)
             file_size += file_stat.st_size
-        res[root] = file_size
+        res[root]= file_size
         print("Folder %s size is %d" % (root, file_size))
         for d in subdirs:
             subFolderName = os.path.join(root, d)
             print("SubDir %s"% (subFolderName))
             res = recursive_size(subFolderName, res)
         return res
+    

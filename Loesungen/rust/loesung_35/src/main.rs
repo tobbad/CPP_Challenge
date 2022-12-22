@@ -3,11 +3,11 @@ use std::env;
 
 fn main(){
     
-    
-    let lines = recursive_size(env::current_dir()?.into_os_string());
+    //print_type_of(env::current_dir());
+    let lines = recursive_size(env::current_dir().unwrap());
     for line in lines
     {
-        println!("{}", line.1);
+        //println!("Dir {} Size = {}", line.0.to_str().unwrap(), line.1);
     }
     
 }

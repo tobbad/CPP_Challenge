@@ -6,7 +6,8 @@ use rand::Rng;
 use std::fmt::Display;
 use std::{env, fs};
 use walkdir::WalkDir;
-
+use std::path::PathBuf;
+ 
 pub fn get_int_fromcl(question:&str)->u64
 {
 
@@ -517,27 +518,55 @@ pub fn pascal_dreieck(line_cnt:u8) -> Vec<String>
     res 
 }
 
-fn print_type_of<T>(_: &T) {
+pub fn print_type_of<T>(_: &T) {
     println!("{}", std::any::type_name::<T>())
 }
 
-pub fn recursive_size(root_folder:&str) -> Vec<(&str, usize)>
+
+pub fn get_folder_size(folder:PathBuf) -> u64 
 {
-	let mut res: Vec<(&str, usize)> = Vec::new();
-	for entry in WalkDir::new(root_folder)
+    let mut size :u64 = 0;
+    for entry in WalkDir::new(folder.as_path())
+    .follow_links(false)
+    .into_iter()    
+    .filter_map(|e| e.ok()) 
+    {    
+        if entry.metadata().unwrap().clone().is_dir()
+        {   
+            println!("Dir {:?}", &entry.clone().into_path().to_str());
+        } 
+        else
+        {
+            let is_file = entry.metadata().unwrap().is_file();
+            if is_file
+            {
+                // Is a file
+                println!("File {}", entry.into_path().to_str().unwrap());
+                size +=  entry.metadata().unwrap().len();
+
+            }
+           }
+                    
+    }
+    size
+}
+
+pub fn recursive_size(root_folder:PathBuf) -> Vec<(PathBuf, u64)>
+{
+	let mut res: Vec<(PathBuf, u64)> = Vec::new();
+	for entry in WalkDir::new(root_folder.into_os_string())
 		.follow_links(true)
 		.into_iter()
 		.filter_map(|e| e.ok()) {
-		let f_name = match entry.file_name().to_str()
-        {
-            Some(path) => path,
-            _ => "Nope",
-            
-        };
-        print_type_of(&f_name);
+        //print_type_of(&entry.into_path());
 		//res.append(f_name);
-		println!("{:?}", &f_name);
-		//res.push((&f_name, 1));
+		//println!("{:?}", &entry.into_path());
+        if entry.file_type().is_dir()
+        {
+            let folder = entry.clone().into_path();
+            let folder_size = get_folder_size(folder);
+            res.push((entry.into_path().clone(), folder_size));
+        }
 	}
 	res
 }

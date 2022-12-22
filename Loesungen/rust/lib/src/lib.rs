@@ -7,7 +7,9 @@ use std::fmt::Display;
 use std::{env, fs};
 use walkdir::WalkDir;
 use std::path::PathBuf;
- 
+use std::collections::HashMap;
+
+>>>>>>> 928a570 (WIP)
 pub fn get_int_fromcl(question:&str)->u64
 {
 
@@ -551,7 +553,7 @@ pub fn get_folder_size(folder:PathBuf) -> u64
     size
 }
 
-pub fn recursive_size(root_folder:PathBuf) -> Vec<(PathBuf, u64)>
+pub fn recursive_size(root_folder:PathBuf, res:HashMap) -> Vec<(PathBuf, u64)>
 {
 	let mut res: Vec<(PathBuf, u64)> = Vec::new();
 	for entry in WalkDir::new(root_folder.into_os_string())
@@ -561,12 +563,16 @@ pub fn recursive_size(root_folder:PathBuf) -> Vec<(PathBuf, u64)>
         //print_type_of(&entry.into_path());
 		//res.append(f_name);
 		//println!("{:?}", &entry.into_path());
-        if entry.file_type().is_dir()
+        if entry.metadata.is_dir()
         {
             let folder = entry.clone().into_path();
             let folder_size = get_folder_size(folder);
             res.push((entry.into_path().clone(), folder_size));
         }
+        //print_type_of(&f_name);
+		//res.append(f_name);
+		//println!("{:?}", &f_name.to_str());
+		res.push((f_name.to_string(), 1));
 	}
 	res
 }

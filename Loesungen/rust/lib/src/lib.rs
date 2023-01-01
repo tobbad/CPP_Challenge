@@ -4,12 +4,11 @@ use std::str;
 use rand;
 use rand::Rng;
 use std::fmt::Display;
-use std::{env, fs};
+//use std::{env, fs};
 use walkdir::WalkDir;
 use std::path::PathBuf;
 use std::collections::HashMap;
 
->>>>>>> 928a570 (WIP)
 pub fn get_int_fromcl(question:&str)->u64
 {
 
@@ -525,37 +524,39 @@ pub fn print_type_of<T>(_: &T) {
 }
 
 
-pub fn get_folder_size(folder:PathBuf) -> u64 
+fn get_folder_size(folder:PathBuf) -> u64
 {
     let mut size :u64 = 0;
+
     for entry in WalkDir::new(folder.as_path())
     .follow_links(false)
+    .min_depth(0)
+    .max_depth(1)
     .into_iter()    
     .filter_map(|e| e.ok()) 
     {    
-        if entry.metadata().unwrap().clone().is_dir()
+        if entry.metadata().unwrap().is_dir()
         {   
-            println!("Dir {:?}", &entry.clone().into_path().to_str());
+            println!("Dir {:?}", entry.clone().into_path().to_str().unwrap());
         } 
-        else
-        {
-            let is_file = entry.metadata().unwrap().is_file();
-            if is_file
-            {
-                // Is a file
-                println!("File {}", entry.into_path().to_str().unwrap());
-                size +=  entry.metadata().unwrap().len();
+		if  entry.metadata().unwrap().is_file()
+		{
+			// Is a file
+			let f_name = entry.file_name();
+			println!("    File {:?} with size {} ", f_name, entry.metadata().unwrap().len());
+			size +=  entry.metadata().unwrap().len();
 
-            }
-           }
-                    
+		}
+
     }
+    println!("Size of folder {}", size);
     size
 }
 
-pub fn recursive_size(root_folder:PathBuf, res:HashMap) -> Vec<(PathBuf, u64)>
+pub fn recursive_size(root_folder:PathBuf) -> HashMap<PathBuf, u64>
 {
-	let mut res: Vec<(PathBuf, u64)> = Vec::new();
+    let mut res = HashMap::new();
+	let avoid_path = PathBuf::from("/home/badi/projekte/sw/C_CPP/CPP_Challenge/Loesungen/rust/rust_in_action");
 	for entry in WalkDir::new(root_folder.into_os_string())
 		.follow_links(true)
 		.into_iter()
@@ -563,16 +564,15 @@ pub fn recursive_size(root_folder:PathBuf, res:HashMap) -> Vec<(PathBuf, u64)>
         //print_type_of(&entry.into_path());
 		//res.append(f_name);
 		//println!("{:?}", &entry.into_path());
-        if entry.metadata.is_dir()
-        {
-            let folder = entry.clone().into_path();
-            let folder_size = get_folder_size(folder);
-            res.push((entry.into_path().clone(), folder_size));
-        }
-        //print_type_of(&f_name);
-		//res.append(f_name);
-		//println!("{:?}", &f_name.to_str());
-		res.push((f_name.to_string(), 1));
+		let folder = entry.into_path().parent().unwrap().to_path_buf();
+		if folder != avoid_path
+		{
+			let folder_size = get_folder_size(folder.clone());
+			*res.entry(folder).or_insert(0) +=folder_size;
+			//print_type_of(&f_name);
+			//println!("{:?}", &f_name.to_str());
+			//.push((f_name.to_string(), 1));
+		}
 	}
 	res
 }

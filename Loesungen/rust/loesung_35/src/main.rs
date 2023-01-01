@@ -3,18 +3,11 @@ use std::env;
 
 fn main(){
     
-    let root = match env::current_dir()
+    let root = env::current_dir().unwrap();
+    let res = recursive_size(root);
+    for (k,v) in res
     {
-        Ok(p) => p.into_os_string(),
-        Err(e) => {
-            panic!("No valid path {}", e);
-        }
-    };
-    let mut res = HashMap::new();
-    let lines = recursive_size(root, res);
-    for line in lines
-    {
-        println!("{} {}", line.0, line.1);
+        println!("{:?} {}", k, v);
     }
 
     
